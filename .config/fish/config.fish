@@ -4,7 +4,7 @@ end
 
 # Aliases
 
-vim="nvim"
+alias vim="nvim"
 alias rmm=rm
 alias rm=trash
 alias hardrm="bleachbit --shred"
