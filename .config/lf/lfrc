@@ -79,8 +79,9 @@ cmd trash %set -f; mv $fx ~/.local/share/Trash/files/
 cmd bulkrename $vidir
 
 # Bindings
-map <c-f> $lf -remote "send $id select '$(fzf)'"
-map <c-g> $lf -remote "send $id select '$(fd -H . /home /media| fzf)'"
+map <space>
+map <space>p $lf -remote "send $id select '$(fzf)'"
+map <space>l $lf -remote "send $id select '$(fd -H . /home /media| fzf)'"
 map H set hidden!
 map g
 map gg top
@@ -99,7 +100,7 @@ map S $fish; cd .
 map @ push :!<space>$f<c-a><right>
 map d
 map <c-d> !dragon-drop $f
-map dD trash
+map dD !trash $f
 
 map A rename # at the very end
 map c push A<c-u> # new rename
