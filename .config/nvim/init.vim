@@ -61,8 +61,8 @@ nmap <leader>f :FloatermNew --opener=edit lf<CR>
 " Fuzzy find current buffer's DIR
 nmap <leader>p :cd %:p:h <BAR> FloatermNew --opener=edit fzf<CR>
 
-" Live ripgrep through current buffer
-nmap <leader>g :cd %:p:h <BAR>
+" Lazygit in buffer DIR 
+nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit lazygit<CR>
 
 " Fuzzy find any file in /home or /media
 nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home \| fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')<CR>
@@ -71,6 +71,7 @@ nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home \| fz
 
 " Run code with F4
 nnoremap <silent> <F4> <plug>CodeRunner                                                                     
+
 " Start Debugger with F5
 nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
 nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
