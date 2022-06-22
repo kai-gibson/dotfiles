@@ -6,7 +6,7 @@ end
 
 alias rm=trash
 alias hardrm="bleachbit --shred"
-alias screenSwap="sh /home/kai/.dotfiles/scripts/screenSwap.sh"
+alias screenSwap="sh /home/kai/.config/scripts/screenSwap.sh"
 alias hibernate="systemctl hibernate"
 alias pac="paru"
 alias bright="xrandr --output eDP-1 --brightness"
