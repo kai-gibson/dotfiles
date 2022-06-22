@@ -5,7 +5,7 @@ end
 # Aliases
 
 alias vim="nvim"
-alias rmm=rm
+alias rmm="/usr/bin/env rm"
 alias rm=trash
 alias hardrm="bleachbit --shred"
 alias screenSwap="sh /home/kai/.config/scripts/screenSwap.sh"
