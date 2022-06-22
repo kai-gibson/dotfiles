@@ -1,7 +1,7 @@
 #! /bin/bash
 
 dwmblocks &
-nitrogen --restore &
+sh $HOME/.fehbg &
 picom &
 lxsession &
 udiskie &
