@@ -4,7 +4,7 @@ hdmiCheck="$(cat /sys/class/drm/card0-HDMI-A-1/status | grep '^connected')"
 
 if [ "$hdmiCheck" = 'connected' ]
 then
-    sh desktopSetup.sh
+    sh $HOME/.config/scripts/desktopSetup.sh
 else
-    sh desktopEnd.sh
+    sh $HOME/.config/scripts/desktopEnd.sh
 fi
