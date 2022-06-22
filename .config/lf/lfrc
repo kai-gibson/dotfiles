@@ -1,6 +1,5 @@
 # LF config
 set shell sh
-
 # Note on Image Previews
 # For those wanting image previews, like this system, there are four steps to
 # set it up. These are done automatically for LARBS users, but I will state
@@ -99,8 +98,8 @@ map O $mimeopen --ask $f
 map S $fish; cd .
 map @ push :!<space>$f<c-a><right>
 map d
-map <c-d> !dragon-drop $f
-map dD !trash $f
+map <c-d> $dragon-drop $f
+map dD $trash $f
 
 map A rename # at the very end
 map c push A<c-u> # new rename
