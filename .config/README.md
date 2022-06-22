@@ -41,6 +41,7 @@
         - logseq
         - kitty
     - Neovim and Lf:
+        - nodejs
         - bat
         - fzf
         - ripgrep
