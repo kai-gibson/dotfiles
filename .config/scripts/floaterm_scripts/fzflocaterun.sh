@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 command=$(fd -H . /home | fzf)
 
