@@ -10,52 +10,52 @@ alias config='/usr/bin/env git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 config checkout
 ```
 ## Includes configs for:
-    * Fish shell
-    * Kitty terminal emulator
-    * Lf file manager
-    * Neovim (as an IDE)
-    * Rofi
-    * Tmux
+- Fish shell
+- Kitty terminal emulator
+- Lf file manager
+- Neovim (as an IDE)
+- Rofi
+- Tmux
 
 ## And Custom builds of:
-    * Dwm
-    * Dwm blocks
+- Dwm
+- Dwm blocks
 
 ## Dependencies:
-    * System:
-        * git
-        * fish
-        * kitty
-        * rofi
-        * lf
-        * neovim
-        * tmux
-        * lxappearance
-        * lightdm
-        * neofetch
-        * tlp
-        * tlp ui
-        * autocpufreq
-    * Dwm autostart:
-        * feh
-        * picom
-        * lxsession
-        * udiskie
-        * cbatticon
-        * nextcloud-client
-        * nm-applet
-        * brave
-        * logseq
-        * kitty
-    * Neovim and Lf:
-        * nodejs
-        * bat
-        * fzf
-        * ripgrep
-        * fd
-        * lazygit
-        * trash-cli
-        * dragon-drop
-        * p7zip
-        * bleachbit
-        * ueberzug
+- System:
+    - git
+    - fish
+    - kitty
+    - rofi
+    - lf
+    - neovim
+    - tmux
+    - lxappearance
+    - lightdm
+    - neofetch
+    - tlp
+    - tlp ui
+    - autocpufreq
+- Dwm autostart:
+    - feh
+    - picom
+    - lxsession
+    - udiskie
+    - cbatticon
+    - nextcloud-client
+    - nm-applet
+    - brave
+    - logseq
+    - kitty
+- Neovim and Lf:
+    - nodejs
+    - bat
+    - fzf
+    - ripgrep
+    - fd
+    - lazygit
+    - trash-cli
+    - dragon-drop
+    - p7zip
+    - bleachbit
+    - ueberzug
