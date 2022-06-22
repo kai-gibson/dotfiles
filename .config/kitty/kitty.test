@@ -1,0 +1,62 @@
+font_family      Fira Code
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+
+font_size 12.0
+
+background_opacity 0.8
+
+# selection_foreground #000000
+# selection_background #FFFACD
+
+#: The 16 terminal colors. There are 8 basic colors, each color has a
+#: dull and bright version. You can also set the remaining colors from
+#: the 256 color table as color16 to color255.
+
+#: The foreground and background
+backround #1f1e23
+foreground #f1c48e
+
+color0 #3c3836
+color8 #8d8889
+
+#: black
+
+color1 #de7f6b
+color9 #ff3d29
+
+#: red
+
+color2  #899f00
+color10 #98bb2e
+
+#: green
+
+color3  #a68749
+color11 #edc059
+
+#: yellow
+
+color4  #839ced
+color12 #92a09e
+
+#: blue
+
+color5  #b88db7
+color13 #c4add9
+
+#: magenta
+
+color6  #c0d5a0
+color14 #b2ea77
+
+#: cyan
+
+color7  #f3d8b7
+color15 #f1c48e
+
+#: white
+
+window_margin_width 5
+
