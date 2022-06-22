@@ -12,7 +12,7 @@ alias pac="paru"
 alias bright="xrandr --output eDP-1 --brightness"
 alias lf=lfub
 alias weather="curl wttr.in"
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias config='/usr/bin/env git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Automatically start a tmux session on booting fish 
 # (script has an if handler for tmux already existing and throws a silent error)
