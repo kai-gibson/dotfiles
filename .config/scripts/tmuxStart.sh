@@ -6,6 +6,6 @@ fi
 
 tmux new-session -d -n "fish"
 tmux neww -d -n "lf" lf 
-tmux neww -d -n "etc"
+tmux neww -d -n "mp3" mocp
 tmux neww -d -n "var"
 tmux a

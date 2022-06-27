@@ -15,6 +15,8 @@ call plug#begin('~/.vim/plugged')
     
     " Tools
     Plug 'voldikss/vim-floaterm'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-commentary'
 
     " Debugging
     Plug 'mfussenegger/nvim-dap'
@@ -27,7 +29,9 @@ call plug#end()
 " === Remaps === "
 
 let mapleader = " "
+" Escape replaced with "jk"
 inoremap jk <ESC>
+xnoremap jk <ESC>
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
@@ -67,23 +71,37 @@ nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit lazygit<CR>
 " Fuzzy find any file in /home or /media
 nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home \| fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')<CR>
 
+" Note:
+"    "S(" to surround block with brackets
+"    "gc" to comment out block
+
 " Debugger
 
 " Run code with F4
 nnoremap <silent> <F4> <plug>CodeRunner                                                                     
 
 " Start Debugger with F5
-nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
+nnoremap <silent> <F5> :call DebugRunner()<CR>
 nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
 nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
 nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
-nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <A-b> <Cmd>lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
 " Open debugging UI with space"rd"
 nmap <leader>dr :call DebuggerUIOpen()<CR>
 nmap <leader>dl :lua require'dap'.run_last()<CR>
 
 let g:bool_ui_open=0
+function! DebugRunner()
+    if g:bool_ui_open==0
+        let g:bool_ui_open=1
+        execute "lua require'dapui'.setup() require'dapui'.open()"
+        execute "lua require'dap'.continue()"
+    elseif g:bool_ui_open==1
+        execute "lua require'dap'.continue()"
+    endif
+endfunction
+
 function! DebuggerUIOpen()
     if g:bool_ui_open==0
         let g:bool_ui_open=1
@@ -95,7 +113,7 @@ endfunction
 
 
 " Run code with rr
-nmap <leader>rr <plug>CodeRunner
+"nmap <leader>rr <plug>CodeRunner
 
 " === Options === "
 
@@ -127,6 +145,13 @@ set mouse=a                 " enable mouse click
 filetype plugin on
 set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
+
+" Use hybrid line numbers in normal mode, and absolute in insert mode
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
 
 " === Airline settings === "
 

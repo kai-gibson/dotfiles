@@ -39,8 +39,8 @@ cmd open ${{
 			lf -remote "send toggle"
 		done &
 		;;
-	audio/*) mpv --audio-display=no $f ;;
-	video/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+	audio/*) setsid -f mpv $f -quiet >/dev/null 2>&1 ;;
+	video/*) mpv $f ;;
 	application/pdf|application/vnd*|application/epub*) setsid -f zathura $fx >/dev/null 2>&1 ;;
 	application/pgp-encrypted) $EDITOR $fx ;;
         *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
@@ -79,8 +79,9 @@ cmd bulkrename $vidir
 
 # Bindings
 map <space>
+map <space><space> toggle
 map <space>p $lf -remote "send $id select '$(fzf)'"
-map <space>l $lf -remote "send $id select '$(fd -H . /home /media| fzf)'"
+map <space>l $lf -remote "send $id select '$(fd -H . /home | fzf)'"
 map H set hidden!
 map g
 map gg top
@@ -100,6 +101,8 @@ map @ push :!<space>$f<c-a><right>
 map d
 map <c-d> $dragon-drop $f
 map dD $trash $f
+map dd cut
+map jk <esc>
 
 map A rename # at the very end
 map c push A<c-u> # new rename
