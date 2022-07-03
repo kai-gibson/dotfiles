@@ -31,7 +31,7 @@ call plug#end()
 let mapleader = " "
 " Escape replaced with "jk"
 inoremap jk <ESC>
-xnoremap jk <ESC>
+"xnoremap jk <ESC>
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
@@ -69,7 +69,7 @@ nmap <leader>p :cd %:p:h <BAR> FloatermNew --opener=edit fzf<CR>
 nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit lazygit<CR>
 
 " Fuzzy find any file in /home or /media
-nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home \| fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')<CR>
+nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home /run/media \| fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')<CR>
 
 " Note:
 "    "S(" to surround block with brackets

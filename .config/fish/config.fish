@@ -11,6 +11,7 @@ alias hardrm="bleachbit --shred"
 alias screenSwap="sh /home/kai/.config/scripts/screenSwap.sh"
 alias hibernate="systemctl hibernate"
 alias pac="paru"
+alias sys="sudo systemctl"
 alias bright="xrandr --output eDP-1 --brightness"
 alias lf=lfub
 alias weather="curl wttr.in"
