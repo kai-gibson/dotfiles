@@ -13,7 +13,6 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   boot.plymouth = {
     enable = true;
@@ -21,15 +20,6 @@
   };
 
   boot.initrd.systemd.enable = true;
-
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
-
-  # Enable swap on luks
-  boot.initrd.luks.devices."luks-28fc1374-6c0c-4d9d-b71b-9417d3c9624e".device = "/dev/disk/by-uuid/28fc1374-6c0c-4d9d-b71b-9417d3c9624e";
-  boot.initrd.luks.devices."luks-28fc1374-6c0c-4d9d-b71b-9417d3c9624e".keyFile = "/crypto_keyfile.bin";
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -52,7 +42,7 @@
 
   # Enable DWM and lightdm
   services.xserver.displayManager.lightdm.enable = true;
-#  services.xserver.windowManager.dwm.enable = true;
+  services.xserver.windowManager.dwm.enable = true;
 
   # Enable virtualisation
   virtualisation.libvirtd.enable = true;
@@ -85,11 +75,12 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kai = {
     isNormalUser = true;
+    initialPassword = "abcd";
     description = "Kai";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
   };
@@ -125,6 +116,7 @@
     auto-cpufreq
     tlp
     github-cli
+    htop
 
     # Apps
     brave
@@ -133,7 +125,6 @@
     arandr
     logseq
     virt-manager
-    
 
     # System tools
     picom
@@ -161,14 +152,14 @@
   # Package overlays
   # Note: this won't work unless you've pulled my dotfiles
 
-#  nixpkgs.overlays = [
-#    (self: super: {
-#      dwm = super.dwm.overrideAttrs (_: { src = /home/kai/.config/dwm-kai;});
-#    })
-#    (self: super: {
-#      dwmblocks = super.dwmblocks.overrideAttrs (_: { src = /home/kai/.config/dwmblocks-kai;});
-#    })
-#  ];
+  nixpkgs.overlays = [
+    (self: super: {
+      dwm = super.dwm.overrideAttrs (_: { src = /home/kai/.config/dwm-kai;});
+    })
+    (self: super: {
+      dwmblocks = super.dwmblocks.overrideAttrs (_: { src = /home/kai/.config/dwmblocks-kai;});
+    })
+  ];
 
   users.defaultUserShell = pkgs.fish;
 
