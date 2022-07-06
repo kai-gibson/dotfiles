@@ -1,4 +1,4 @@
-# Kai's Dotfiles for Arch Linux
+# Kai's Dotfiles for NixOS
 
 ## To Install:
 Before installing, it's best to delete everything in .config, .local/bin,
