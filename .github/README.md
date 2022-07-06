@@ -5,7 +5,7 @@ Before installing, it's best to delete everything in .config, .local/bin,
 and .local/share/fonts
 ```
 echo ".dotfiles" >> .gitignore
-git clone --bare https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles
+git clone --bare -b nix https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles
 alias config='/usr/bin/env git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 config checkout
 ```
