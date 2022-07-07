@@ -1,8 +1,10 @@
 #!/bin/sh
 
-dwmblocks &
+sh $HOME/.screenlayout/screenRes.sh &
 sh $HOME/.fehbg &
-picom --experimental-backends &
+sh $HOME/.config/scripts/get_nix_pkgs.sh &
+dwmblocks &
+picom &
 lxsession &
 udiskie &
 cbatticon -u 20 -i standard -c "poweroff" -l 15 -r 5 &
