@@ -30,7 +30,7 @@ if nc -zw1 google.com 443; then
 
     echo $DISK
     # Disk name is now stored in $DISK
-
+#TESTING
 ## Make partitions
 #    echo "Making Partitions..."
 #    echo -e "g\nn\n\n\n+500M\nt\n\n1\nn\n\n\n\np\nw\n" | fdisk /dev/$DISK
