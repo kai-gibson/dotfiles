@@ -121,7 +121,7 @@ if nc -zw1 google.com 443; then
    curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix >> /mnt/etc/nixos/packages.nix
 
 # Create diff between generated and my hardware-configuration
-    diff -u /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
+    diff -u /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
 
    echo "please remove any incorrect changes from the diff file"
    sleep 2
