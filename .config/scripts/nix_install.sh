@@ -113,6 +113,13 @@ if nc -zw1 google.com 443; then
 # Generate defualt config
    nixos-generate-config --root /mnt
 
+# Grab my .nix files from github and put them in /mnt/etc
+   mv /mnt/etc/nixos /mnt/etc/bak_nixos
+   mkdir /mnt/etc/nixos
+   curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix >> /mnt/etc/nixos/configuration.nix
+   curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix >> /mnt/etc/nixos/hardware-configuration.nix
+   curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix >> /mnt/etc/nixos/packages.nix
+
 # Create diff between generated and my hardware_configuration
    diff -u /mnt/etc/bak_nixos/hardware_configuration.nix /mnt/etc/nixos/hardware_configuration.nix > hardware_configuration.patch
 
@@ -123,12 +130,6 @@ if nc -zw1 google.com 443; then
    patch -u -b /mnt/etc/bak_nixos/hardware_configuration.nix -i hardware_configuration.patch
    mv /mnt/etc/bak_nixos/hardware_configuration.nix /mnt/etc/nixos/hardware_configuration.nix
 
-   # First, grab .nix files from repo and put them in /mnt/etc
-   mv /mnt/etc/nixos /mnt/etc/bak_nixos
-   mkdir /mnt/etc/nixos
-   curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix >> /mnt/etc/nixos/configuration.nix
-   curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix >> /mnt/etc/nixos/hardware-configuration.nix
-   curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix >> /mnt/etc/nixos/packages.nix
    
    # Then install
    cd /mnt
