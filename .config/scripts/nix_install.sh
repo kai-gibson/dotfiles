@@ -12,7 +12,7 @@ if nc -zw1 google.com 443; then
     #nix-env -iA nixos.git
     
 # Get disk name
-    #DISK_LIST=$(lsblk -l | tail -n +2 | awk '{print $1}')
+    DISK_LIST=$(lsblk -l | tail -n +2 | awk '{print $1}')
 
     echo "Please select disk:"
     echo "(WARNING: The selected disk will be completely wiped)"
@@ -111,7 +111,7 @@ if nc -zw1 google.com 443; then
    echo "Swap finished"
 
 # Generate defualt config
-   nixos-genereate-config --root /mnt
+   nixos-generate-config --root /mnt
 
 # Create diff between generated and my hardware_configuration
    diff -u /mnt/etc/bak_nixos/hardware_configuration.nix /mnt/etc/nixos/hardware_configuration.nix > hardware_configuration.patch
