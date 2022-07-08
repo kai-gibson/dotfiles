@@ -17,15 +17,16 @@ if nc -zw1 google.com 443; then
     echo "Please select disk:"
     echo "(WARNING: The selected disk will be completely wiped)"
 
-    select DISK in $DISK_LIST
-    do
-        if [ -z $(echo " $(lsblk -l | tail -n +2 | awk '{print $1}') " | grep -woP "$DISK") ]; 
-        then 
-            echo "Invalid input"; 
-        else
-            break
-        fi
-    done
+    read DISK
+    # select DISK in $DISK_LIST
+    # do
+    #     if [ -z $(echo " $(lsblk -l | tail -n +2 | awk '{print $1}') " | grep -woP "$DISK") ]; 
+    #     then 
+    #         echo "Invalid input"; 
+    #     else
+    #         break
+    #     fi
+    # done
 
     # Disk name is now stored in $DISK
 
