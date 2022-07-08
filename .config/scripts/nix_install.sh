@@ -9,6 +9,7 @@ if nc -zw1 google.com 443; then
     echo "Internet connected! Starting Install"
     echo "Installing required tools..."
 
+    echo "the update is working _______________========="
     nix-env -iA nixos.git
     
 # Get disk name
@@ -17,7 +18,6 @@ if nc -zw1 google.com 443; then
     echo "Please select disk:"
     echo "(WARNING: The selected disk will be completely wiped)"
 
-    echo "the update is working _______________========="
 
     read DISK
     # select DISK in $DISK_LIST
