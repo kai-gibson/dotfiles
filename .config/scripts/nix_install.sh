@@ -40,10 +40,11 @@ if nc -zw1 google.com 443; then
    while [ $VALID != "yes" ]
    do
         echo "Enter Encryption Key:"
-        read ENCRYPTION_KEY
+        read -s ENCRYPTION_KEY
    
         echo "Confirm Key:"
-        read VALIDATE_ENCRYPTION_KEY
+        read -s VALIDATE_ENCRYPTION_KEY
+
    
         if [ $ENCRYPTION_KEY == $VALIDATE_ENCRYPTION_KEY ]; then
             VALID=yes
@@ -125,7 +126,7 @@ if nc -zw1 google.com 443; then
 
    echo "please remove any incorrect changes from the diff file"
    sleep 2
-   vim hardware-configuration.patch
+    ex hardware-configuration.patch
 
    patch -u -b /mnt/etc/bak_nixos/hardware-configuration.nix -i hardware-configuration.patch
    mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
