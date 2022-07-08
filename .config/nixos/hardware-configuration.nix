@@ -14,39 +14,39 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/1c610d80-d94a-4538-93d9-4a6106bc2cb3";
+    { device = "/dev/disk/by-label/NIXROOT";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
 
-  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/515175af-b0e8-4192-9f67-35a796987a7a";
+  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-label/NIXENC";
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/1c610d80-d94a-4538-93d9-4a6106bc2cb3";
+    { device = "/dev/disk/by-label/NIXROOT";
       fsType = "btrfs";
       options = [ "subvol=@home" ];
     };
 
   fileSystems."/var" =
-    { device = "/dev/disk/by-uuid/1c610d80-d94a-4538-93d9-4a6106bc2cb3";
+    { device = "/dev/disk/by-label/NIXROOT";
       fsType = "btrfs";
       options = [ "subvol=@var" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/1c610d80-d94a-4538-93d9-4a6106bc2cb3";
+    { device = "/dev/disk/by-label/NIXROOT";
       fsType = "btrfs";
       options = [ "subvol=@nix" ];
     };
 
   fileSystems."/swap" =
-    { device = "/dev/disk/by-uuid/1c610d80-d94a-4538-93d9-4a6106bc2cb3";
+    { device = "/dev/disk/by-label/NIXROOT";
       fsType = "btrfs";
       options = [ "subvol=@swap" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/EB39-36D9";
+    { device = "/dev/disk/by-label/NIXBOOT";
       fsType = "vfat";
     };
 
