@@ -2,6 +2,14 @@
 
 # Script to install NixOS
 
+# TODO:
+# - Add whitespace around text output
+# - Extensively test installer
+# - Figure out how to edit diffs to get expected results
+# - Work on streamlining script
+# MAYBE:
+# - Stop script at errors, handle them, then resume
+
 # First, check if internet is connected
 if nc -zw1 google.com 443; then
 
@@ -9,7 +17,7 @@ if nc -zw1 google.com 443; then
     echo "Internet connected! Starting Install"
     echo "Installing required tools..."
 
-    #nix-env -iA nixos.git
+    nix-env -iA nixos.git
     
 # Get disk name
     DISK_LIST=$(lsblk -l | tail -n +2 | awk '{print $1}')
@@ -135,7 +143,7 @@ if nc -zw1 google.com 443; then
    
    # Then install
    cd /mnt
-   #nixos-install
+   nixos-install
 
 else
     echo "No internet detected, please connect then run the script again"
