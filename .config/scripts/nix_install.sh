@@ -123,10 +123,11 @@ if nc -zw1 google.com 443; then
 
 # Create diff between generated and my hardware-configuration
     diff -u /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
+    chmod +rw hardware-configuration.patch
 
    echo "please remove any incorrect changes from the diff file"
    sleep 2
-    vim -s hardware-configuration.patch
+    vim -s hardware-configuration.patch hardware_configuration.patch
 
    patch -u -b /mnt/etc/bak_nixos/hardware-configuration.nix -i hardware-configuration.patch
    mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
