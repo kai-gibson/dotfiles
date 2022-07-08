@@ -1,6 +1,4 @@
-{ config, pkgs, lib, ... }:
-
-{
+{ config, pkgs, lib, ... }: {
   environment.systemPackages = with pkgs; [
     # Terminal utilities
     git
@@ -23,6 +21,7 @@
     tlp
     github-cli
     htop
+    pfetch
 
     # Apps
     brave
@@ -58,14 +57,28 @@
   ];
   
   # Package overlays
-  # Note: this won't work unless you've pulled my dotfiles
+
+  /* nixpkgs.overlays = [ */
+  /*   (self: super: { */
+  /*     dwm = super.dwm.overrideAttrs (_: { src = /home/kai/.config/dwm-kai;}); */
+  /*   }) */
+  /*   (self: super: { */
+  /*     dwmblocks = super.dwmblocks.overrideAttrs (_: { src = /home/kai/.config/dwmblocks-kai;}); */
+  /*   }) */
+  /* ]; */
 
   nixpkgs.overlays = [
     (self: super: {
-      dwm = super.dwm.overrideAttrs (_: { src = /home/kai/.config/dwm-kai;});
+      dwm = super.dwm.overrideAttrs (_: { 
+          src = builtins.fetchGit {
+              url = "https://github.com/kai-gibson/dwm-kai.git";
+              ref = "main";
+          };
+      });
     })
     (self: super: {
-      dwmblocks = super.dwmblocks.overrideAttrs (_: { src = /home/kai/.config/dwmblocks-kai;});
+      dwmblocks = super.dwmblocks.overrideAttrs (_: { 
+          src = /home/kai/.config/dwmblocks-kai;});
     })
   ];
 
