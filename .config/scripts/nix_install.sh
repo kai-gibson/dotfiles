@@ -120,15 +120,15 @@ if nc -zw1 google.com 443; then
    curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix >> /mnt/etc/nixos/hardware-configuration.nix
    curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix >> /mnt/etc/nixos/packages.nix
 
-# Create diff between generated and my hardware_configuration
-   PATCH=$(diff -u /mnt/etc/bak_nixos/hardware_configuration.nix /mnt/etc/nixos/hardware_configuration.nix)
+# Create diff between generated and my hardware-configuration
+    diff -u /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
 
    echo "please remove any incorrect changes from the diff file"
    sleep 2
-   vim hardware_configuration.patch
+   vim hardware-configuration.patch
 
-   patch -u -b /mnt/etc/bak_nixos/hardware_configuration.nix -i $PATCH
-   mv /mnt/etc/bak_nixos/hardware_configuration.nix /mnt/etc/nixos/hardware_configuration.nix
+   patch -u -b /mnt/etc/bak_nixos/hardware-configuration.nix -i hardware-configuration.patch
+   mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
 
    
    # Then install
