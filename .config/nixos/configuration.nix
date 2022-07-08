@@ -137,8 +137,10 @@
           text = ''
           PATH=$PATH:${lib.makeBinPath [ pkgs.git ]}
           if [ ! -e $HOME/.dotfiles ]; then
-              git clone --bare https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles
-              git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
+              git clone -b nix --bare https://github.com/kai-gibson/dotfiles.git /tmp/clonedir/.dotfiles
+              git --git-dir=/tmp/clonedir/.dotfiles --work-tree=/tmp/clonedir checkout
+
+              rsync -a /tmp/clonedir $HOME
           fi
           '';
       };
