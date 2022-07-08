@@ -11,3 +11,4 @@ curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/pac
 
 # Then install
 cd /mnt
+nixos-install
