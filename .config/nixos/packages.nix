@@ -72,13 +72,18 @@
       dwm = super.dwm.overrideAttrs (_: { 
           src = builtins.fetchGit {
               url = "https://github.com/kai-gibson/dwm-kai.git";
-              ref = "main";
+              ref = "nix";
           };
       });
     })
+
     (self: super: {
       dwmblocks = super.dwmblocks.overrideAttrs (_: { 
-          src = /home/kai/.config/dwmblocks-kai;});
+          src = builtins.fetchGit {
+              url = "https://github.com/kai-gibson/dwmblocks-kai.git";
+              ref = "main";
+          };
+      });
     })
   ];
 

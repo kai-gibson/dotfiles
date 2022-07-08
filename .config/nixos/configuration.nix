@@ -131,6 +131,15 @@
     };
   };
 
+  system.activationScripts = {
+      cloneDotfiles = {
+          text = ''
+          git clone --bare https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles
+          git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
+          '';
+      };
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
