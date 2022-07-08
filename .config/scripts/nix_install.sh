@@ -3,7 +3,7 @@
 # Script to install NixOS
 
 # First, check if internet is connected
-if nc -zw1 google.com 443; then
+#if nc -zw1 google.com 443; then
 
     # If yes, start install
     echo "Internet connected! Starting Install"
@@ -17,7 +17,7 @@ if nc -zw1 google.com 443; then
     echo "Please select disk:"
     echo "(WARNING: The selected disk will be completely wiped)"
 
-    read DISK < /proc/${PPID}/fd/0
+    read DISK
     # select DISK in $DISK_LIST
     # do
     #     if [ -z $(echo " $(lsblk -l | tail -n +2 | awk '{print $1}') " | grep -woP "$DISK") ]; 
@@ -134,6 +134,6 @@ if nc -zw1 google.com 443; then
     cd /mnt
     #nixos-install
 
-else
-    echo "No internet detected, please connect then run the script again"
-fi
+# else
+#     echo "No internet detected, please connect then run the script again"
+# fi
