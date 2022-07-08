@@ -1,19 +1,13 @@
 #!/bin/sh
 
-# Script to install NixOS dotfiles
+# Script to install NixOS
 
-# 1. Clone dotfiles
+# First, grab .nix files from repo and put them in /mnt/etc
+mv /mnt/etc/nixos /mnt/etc/bak_nixos
+mkdir /mnt/etc/nixos
+curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix >> /mnt/etc/nixos/configuration.nix
+curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix >> /mnt/etc/nixos/hardware-configuration.nix
+curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix >> /mnt/etc/nixos/packages.nix
 
-echo ".dotfiles" >> $HOME/.gitignore
-git clone --bare -b nix https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles
-git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
-
-# 2. Symlink Nix config
-
-sudo mv /etc/nixos /etc/nixos_bak
-sudo ln -s $HOME/.config/nix/ /etc/nixos
-
-# 3. Install vim-plug
-
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+# Then install
+cd /mnt
