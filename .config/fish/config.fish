@@ -7,6 +7,8 @@ end
 alias vim="nvim"
 alias rmm="/usr/bin/env rm"
 alias rm=trash
+alias vx="nvim ~/.config/nixos/packages.nix"
+alias update="sudo nixos-rebuild switch"
 alias hardrm="bleachbit --shred"
 alias screenSwap="sh /home/kai/.config/scripts/screenSwap.sh"
 alias hibernate="systemctl hibernate"
