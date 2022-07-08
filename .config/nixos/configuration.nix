@@ -86,6 +86,7 @@
   users.users.kai = {
     isNormalUser = true;
     description = "Kai";
+    initialPassword = "abcd"
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
   };
 
