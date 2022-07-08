@@ -131,11 +131,14 @@
     };
   };
 
-  system.activationScripts = {
+  system.userActivationScripts = {
       cloneDotfiles = {
           text = ''
-          git clone --bare https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles
-          git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
+          PATH=$PATH:${lib.makeBinPath [ pkgs.git ]}
+          if [ ! -e $HOME/.dotfiles ]; then
+              git clone --bare https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles
+              git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
+          fi
           '';
       };
   };

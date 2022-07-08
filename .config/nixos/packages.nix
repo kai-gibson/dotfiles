@@ -21,7 +21,6 @@
     tlp
     github-cli
     htop
-    pfetch
 
     # Apps
     brave
