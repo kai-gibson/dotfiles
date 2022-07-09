@@ -155,6 +155,7 @@ echo -e "\nPlease remove any incorrect changes from the patch file"
 sleep 2
 vim -s hardware-configuration.patch hardware-configuration.patch
 
+# Not working
 patch /mnt/etc/bak_nixos/hardware-configuration.nix hardware-configuration.patch
 mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
 
