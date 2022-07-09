@@ -164,8 +164,8 @@ sleep 2
 vim -s patch patch
 
 patch -u -b $HW_CONFIG_OLD -i patch
-#mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
-#mv $HW_CONFIG_OLD /mnt/etc/nixos/hardware-configuration.nix
+mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
+mv $HW_CONFIG_OLD /mnt/etc/nixos/hardware-configuration.nix
 
 # List out mounts, btrfs subvols, /mnt discard
 # Prompt to edit config
