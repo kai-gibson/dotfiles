@@ -148,15 +148,22 @@ curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/con
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix > /mnt/etc/nixos/hardware-configuration.nix
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix > /mnt/etc/nixos/packages.nix
 
-HW_CONFIG_OLD=/mnt/etc/bak_nixos/hardware-configuration.nix
-HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
+# Testing git diff
+# First, copy old hw configuration to nixos/
+cp /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/old-hardware-configuration.nix
+
+# cd to dir and create diff
+cd /mnt/etc/nixos
+
+# HW_CONFIG_OLD=/mnt/etc/bak_nixos/hardware-configuration.nix
+# HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
 
 # Add user entered swap value to hardware-configuration.nix
 # NOT WORKING TODO
 #cat /mnt/etc/nixos/hardware-configuration.nix | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > /mnt/etc/nixos/hardware-configuration.nix
 
 # Create diff between generated and my hardware-configuration
-diff -u $HW_CONFIG_OLD $HW_CONFIG_NEW > patch
+git diff old-hardware-configuration.nix hardware-configuration.nix > patch
 
 chmod +rw patch
 
@@ -165,9 +172,10 @@ sleep 2
 
 vim -s patch patch
 
-patch -u -b $HW_CONFIG_OLD -i patch
-mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
-mv $HW_CONFIG_OLD /mnt/etc/nixos/hardware-configuration.nix
+git apply patch
+# patch -u -b $HW_CONFIG_OLD -i patch
+# mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
+# mv $HW_CONFIG_OLD /mnt/etc/nixos/hardware-configuration.nix
 
 # List out mounts, btrfs subvols, /mnt discard
 # Prompt to edit config
