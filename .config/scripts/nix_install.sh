@@ -56,8 +56,9 @@ done
 
 # Make partitions
 echo -e "\nMaking Partitions..."
-echo -e "g\nn\n\n\n+500M\nt\n\n1\nn\n\n\n\np\nw\n" | fdisk /dev/$DISK
-echo "Partitioning Finished"
+echo -e "g\nn\n\n\n+500M\nt\n\n1\nn\n\n\n\np\nw\n" | fdisk /dev/$DISK > /dev/null
+fdisk /dev/$DISK -l
+echo -e "\nPartitioning Finished"
 
 # Encrypt disk 
 VALID=no
@@ -88,14 +89,15 @@ echo -e "Encryption Successful\n"
 
 # Make Filesystem
 echo -e "Making Filesystem and Mounting Disks...\n"
-mkfs.vfat -n NIXBOOT /dev/"$DISK"1
-mkfs.btrfs -L NIXROOT /dev/mapper/cryptroot
-mount /dev/mapper/cryptroot /mnt
-btrfs subvol create /mnt/@
-btrfs subvol create /mnt/@home
-btrfs subvol create /mnt/@var
-btrfs subvol create /mnt/@swap
-btrfs subvol create /mnt/@nix
+mkfs.vfat -n NIXBOOT /dev/"$DISK"1 > /dev/null
+mkfs.btrfs -L NIXROOT /dev/mapper/cryptroot > /dev/null
+mount /dev/mapper/cryptroot /mnt > /dev/null
+btrfs subvol create /mnt/@ > /dev/null
+btrfs subvol create /mnt/@home > /dev/null
+btrfs subvol create /mnt/@var > /dev/null
+btrfs subvol create /mnt/@swap > /dev/null
+btrfs subvol create /mnt/@nix > /dev/null
+lsblk
 
 # Mount Subvolumes and Partitions
 umount /mnt
@@ -118,7 +120,7 @@ do
     read SWAP_SIZE
     SWAP_SIZE=$(expr $SWAP_SIZE \* 1024)
 
-    echo "is "$SWAP_SIZE"MB correct? [y,n]"
+    echo "is "$SWAP_SIZE" MB correct? [y,n]"
     read INPUT
 
     if [ $INPUT == "y" ]; then
