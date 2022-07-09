@@ -161,8 +161,8 @@ echo -e "\nplease remove any incorrect changes from the diff file"
 sleep 2
 vim -s hardware-configuration.patch hardware_configuration.patch
 
-patch -u -b $HW_CONFIG_OLD -i $HW_CONFIG_NEW
-mv $HW_CONFIG_NEW /mnt/bak_nixos/new_hardware-configuration.nix
+patch -u -b $HW_CONFIG_OLD -i hardware_configuration.patch 
+mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
 mv $HW_CONFIG_OLD /mnt/etc/nixos/
 
 # List out mounts, btrfs subvols, /mnt discard
@@ -184,14 +184,15 @@ do
 
     case $INPUT in
         1)
-            echo -e "\nMount points:"
-            mount | grep /mnt
-
-            echo -e "\n/mnt contents:\n"
-            ls /mnt
-
-            echo -e "\nBtrfs subvolumes:\n"
-            btrfs subvol List /mnt
+            rm out
+            echo -e "\nMount points:\n" >> out
+            mount | grep /mnt >> out
+            echo -e "\n/mnt contents:\n" >> out
+            ls /mnt >> out
+            echo -e "\nBtrfs subvolumes:\n" >> out
+            btrfs subvol list /mnt >> out
+            
+            less out
         ;;
         2)
             vim -s /mnt/etc/nixos/configuration.nix /mnt/etc/nixos/configuration.nix 
