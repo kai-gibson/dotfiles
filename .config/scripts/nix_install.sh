@@ -144,18 +144,18 @@ nixos-generate-config --root /mnt
 # Grab my .nix files from github and put them in /mnt/etc
 mv /mnt/etc/nixos /mnt/etc/bak_nixos
 mkdir /mnt/etc/nixos
-curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix >> /mnt/etc/nixos/configuration.nix
-curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix >> /mnt/etc/nixos/hardware-configuration.nix
-curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix >> /mnt/etc/nixos/packages.nix
+curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix > /mnt/etc/nixos/configuration.nix
+curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix > /mnt/etc/nixos/hardware-configuration.nix
+curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix > /mnt/etc/nixos/packages.nix
 
-diff -u /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
+diff --git /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
 chmod +rw hardware-configuration.patch
 
 echo -e "\nPlease remove any incorrect changes from the patch file"
 sleep 2
 vim -s hardware-configuration.patch hardware-configuration.patch
 
-patch -u -b /mnt/etc/bak_nixos/hardware-configuration.nix -i hardware-configuration.patch
+patch /mnt/etc/bak_nixos/hardware-configuration.nix hardware-configuration.patch
 mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
 
 # # Testing git diff
