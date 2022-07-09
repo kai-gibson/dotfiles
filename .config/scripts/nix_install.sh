@@ -155,7 +155,7 @@ echo -e "\nPlease remove any incorrect changes from the patch file"
 sleep 2
 vim -s hardware-configuration.patch hardware-configuration.patch
 
-patch -u -b /mnt/etc/bak_nixos.hardware-configuration.nix -i hardware-configuration.patch
+patch -u -b /mnt/etc/bak_nixos/hardware-configuration.nix -i hardware-configuration.patch
 mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
 
 # # Testing git diff
