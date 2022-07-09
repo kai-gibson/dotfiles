@@ -106,8 +106,8 @@ mkdir /mnt/{boot,home,var,swap,nix}
 
 mount -t btrfs -o subvol=@home,ssd,compress=zstd,discard /dev/mapper/cryptroot /mnt/home
 mount -t btrfs -o subvol=@var,ssd,compress=zstd,discard /dev/mapper/cryptroot /mnt/var
-mount -t btrfs -o subvol=@swap,ssd,discard /dev/mapper/cryptroot /mnt/swap
-mount -t btrfs -o subvol=@nix,ssd,compress=zstd,discard /dev/mapper/cryptroot /mnt/nix
+mount -t btrfs -o subvol=@swap,ssd /dev/mapper/cryptroot /mnt/swap
+mount -t btrfs -o subvol=@nix,noatime,ssd,compress=zstd,discard /dev/mapper/cryptroot /mnt/nix
 
 mount /dev/"$DISK"1 /mnt/boot
 
@@ -131,8 +131,10 @@ done
 echo -e "\nGenerating Swap File ...\n"
 truncate -s 0 /mnt/swap/swapfile
 chattr +C /mnt/swap/swapfile
+btrfs property set /mnt/swap/swapfile compression none
 dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=$SWAP_SIZE status=progress
 chmod 600 /mnt/swap/swapfile
+
 mkswap /mnt/swap/swapfile
 swapon /mnt/swap/swapfile
 
@@ -145,15 +147,12 @@ nixos-generate-config --root /mnt
 mv /mnt/etc/nixos /mnt/etc/bak_nixos
 mkdir /mnt/etc/nixos
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix > /mnt/etc/nixos/configuration.nix
-#curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix > /mnt/etc/nixos/hardware-configuration.nix
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix > /mnt/etc/nixos/packages.nix
-curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/scripts/patch > /mnt/etc/nixos/patch
 
-echo -e "Patching swapfile into hardware-configuration.nix"
+echo -e "Adding swapfile into hardware-configuration.nix"
 
 mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
-patch /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/patch
-
+#sed -i "s/"
 
 # diff --git /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
 # chmod +rw hardware-configuration.patch
@@ -174,7 +173,6 @@ patch /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/patch
 # # HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
 # 
 # # Add user entered swap value to hardware-configuration.nix
-# # NOT WORKING TODO
 # #cat /mnt/etc/nixos/hardware-configuration.nix | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > /mnt/etc/nixos/hardware-configuration.nix
 # 
 # 
@@ -195,7 +193,6 @@ patch /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/patch
 # 
 # # List out mounts, btrfs subvols, /mnt discard
 # # Prompt to edit config
-# 
 echo -e "\nPatching complete\n"
 echo -e "Anything else before install?\n"
 
