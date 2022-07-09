@@ -160,20 +160,18 @@ cp /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/old-hardware-con
 # NOT WORKING TODO
 #cat /mnt/etc/nixos/hardware-configuration.nix | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > /mnt/etc/nixos/hardware-configuration.nix
 
-# cd to dir and create diff
-cd /mnt/etc/nixos
 
 # Create diff between generated and my hardware-configuration
-git diff old-hardware-configuration.nix hardware-configuration.nix > patch
+git diff /mnt/etc/nixos/old-hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix --output /mnt/etc/nixos/patch
 
 #chmod +rw patch
 
 echo -e "\nplease remove any incorrect changes from the diff file"
 sleep 2
 
-vim -s patch patch
+vim -s /mnt/etc/nixos/patch /mnt/etc/nxios/patch
 
-git apply patch
+git apply /mnt/etc/nixos/patch
 # patch -u -b $HW_CONFIG_OLD -i patch
 # mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
 # mv $HW_CONFIG_OLD /mnt/etc/nixos/hardware-configuration.nix
