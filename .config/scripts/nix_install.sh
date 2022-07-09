@@ -139,7 +139,6 @@ echo -e "\nSwap finished"
 # Generate defualt config
 nixos-generate-config --root /mnt
 
-
 # Grab my .nix files from github and put them in /mnt/etc
 mv /mnt/etc/nixos /mnt/etc/bak_nixos
 mkdir /mnt/etc/nixos
@@ -162,9 +161,10 @@ chmod +rw hardware-configuration.patch
 
 echo -e "\nplease remove any incorrect changes from the diff file"
 sleep 2
+
 vim -s hardware-configuration.patch hardware-configuration.patch
 
-patch -u -b $HW_CONFIG_OLD -i hardware_configuration.patch 
+patch -u -b $HW_CONFIG_OLD -i hardware-configuration.patch 
 mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
 mv $HW_CONFIG_OLD /mnt/etc/nixos/
 
@@ -172,7 +172,6 @@ mv $HW_CONFIG_OLD /mnt/etc/nixos/
 # Prompt to edit config
 
 echo -e "\nPatching complete\n"
-
 echo -e "Anything else before install?\n"
 
 DONE=no
