@@ -151,10 +151,10 @@ HW_CONFIG_OLD=/mnt/etc/bak_nixos/hardware-configuration.nix
 HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
 
 # Add user entered swap value to hardware-configuration.nix
-cat $HW_CONFIG_NEW | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > $HW_CONFIG_NEW
+cat /mnt/etc/nixos/hardware-configuration.nix | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > /mnt/etc/nixos/hardware-configuration.nix
 
 # Create diff between generated and my hardware-configuration
-diff -u $HW_CONFIG_OLD $HW_CONFIG_NEW > hardware-configuration.patch
+diff -u /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
 chmod +rw hardware-configuration.patch
 
 echo -e "\nplease remove any incorrect changes from the diff file"
@@ -162,8 +162,8 @@ sleep 2
 vim -s hardware-configuration.patch hardware-configuration.patch
 
 patch -u -b $HW_CONFIG_OLD -i hardware_configuration.patch 
-mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
-mv $HW_CONFIG_OLD /mnt/etc/nixos/
+mv /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/bak_nixos/new_hardware-configuration.nix
+mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/
 
 # List out mounts, btrfs subvols, /mnt discard
 # Prompt to edit config
