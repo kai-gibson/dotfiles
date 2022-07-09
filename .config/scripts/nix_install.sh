@@ -145,13 +145,15 @@ nixos-generate-config --root /mnt
 mv /mnt/etc/nixos /mnt/etc/bak_nixos
 mkdir /mnt/etc/nixos
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix > /mnt/etc/nixos/configuration.nix
-curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix > /mnt/etc/nixos/hardware-configuration.nix
+#curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix > /mnt/etc/nixos/hardware-configuration.nix
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix > /mnt/etc/nixos/packages.nix
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/scripts/patch > /mnt/etc/nixos/patch
 
 echo -e "Patching swapfile into hardware-configuration.nix"
 
+mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
 patch /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/patch
+
 
 # diff --git /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
 # chmod +rw hardware-configuration.patch
