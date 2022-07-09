@@ -147,17 +147,22 @@ mkdir /mnt/etc/nixos
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix > /mnt/etc/nixos/configuration.nix
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/hardware-configuration.nix > /mnt/etc/nixos/hardware-configuration.nix
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix > /mnt/etc/nixos/packages.nix
+curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/scripts/patch > /mnt/etc/nixos/patch
 
-diff --git /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
-chmod +rw hardware-configuration.patch
+echo -e "Patching swapfile into hardware-configuration.nix"
 
-echo -e "\nPlease remove any incorrect changes from the patch file"
-sleep 2
-vim -s hardware-configuration.patch hardware-configuration.patch
+patch /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/patch
 
-# Not working
-patch /mnt/etc/bak_nixos/hardware-configuration.nix hardware-configuration.patch
-mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
+# diff --git /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
+# chmod +rw hardware-configuration.patch
+# 
+# echo -e "\nPlease remove any incorrect changes from the patch file"
+# sleep 2
+# vim -s hardware-configuration.patch hardware-configuration.patch
+# 
+# # Not working
+# patch /mnt/etc/bak_nixos/hardware-configuration.nix hardware-configuration.patch
+# mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
 
 # # Testing git diff
 # # First, copy old hw configuration to nixos/
