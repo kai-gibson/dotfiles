@@ -151,7 +151,7 @@ HW_CONFIG_OLD=/mnt/etc/bak_nixos/hardware-configuration.nix
 HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
 
 # Add user entered swap value to hardware-configuration.nix
-cat $HW_CONFIG_NEW | sed "s/size = (1024 * 8);/size = $SWAP_SIZE;/g" > $HW_CONFIG_NEW
+cat $HW_CONFIG_NEW | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > $HW_CONFIG_NEW
 
 # Create diff between generated and my hardware-configuration
 diff -u $HW_CONFIG_OLD $HW_CONFIG_NEW > hardware-configuration.patch
