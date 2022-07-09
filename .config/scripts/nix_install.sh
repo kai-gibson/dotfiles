@@ -159,7 +159,7 @@ chmod +rw hardware-configuration.patch
 
 echo -e "\nplease remove any incorrect changes from the diff file"
 sleep 2
-vim -s hardware-configuration.patch hardware_configuration.patch
+vim -s hardware-configuration.patch hardware-configuration.patch
 
 patch -u -b $HW_CONFIG_OLD -i hardware_configuration.patch 
 mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
