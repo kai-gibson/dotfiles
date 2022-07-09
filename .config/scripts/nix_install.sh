@@ -152,8 +152,6 @@ curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/pac
 # First, copy old hw configuration to nixos/
 cp /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/old-hardware-configuration.nix
 
-# cd to dir and create diff
-cd /mnt/etc/nixos
 
 # HW_CONFIG_OLD=/mnt/etc/bak_nixos/hardware-configuration.nix
 # HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
@@ -162,10 +160,13 @@ cd /mnt/etc/nixos
 # NOT WORKING TODO
 #cat /mnt/etc/nixos/hardware-configuration.nix | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > /mnt/etc/nixos/hardware-configuration.nix
 
+# cd to dir and create diff
+cd /mnt/etc/nixos
+
 # Create diff between generated and my hardware-configuration
 git diff old-hardware-configuration.nix hardware-configuration.nix > patch
 
-chmod +rw patch
+#chmod +rw patch
 
 echo -e "\nplease remove any incorrect changes from the diff file"
 sleep 2
