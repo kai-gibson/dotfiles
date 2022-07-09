@@ -118,7 +118,7 @@ do
     read SWAP_SIZE
     SWAP_SIZE=$(expr $SWAP_SIZE \* 1024)
 
-    echo "is $SWAP_SIZE correct? [y,n]"
+    echo "is "$SWAP_SIZE"MB correct? [y,n]"
     read INPUT
 
     if [ $INPUT == "y" ]; then
@@ -154,19 +154,18 @@ HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
 #cat /mnt/etc/nixos/hardware-configuration.nix | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > /mnt/etc/nixos/hardware-configuration.nix
 
 # Create diff between generated and my hardware-configuration
-diff -u $HW_CONFIG_OLD $HW_CONFIG_NEW > hardware-configuration.patch
+diff -u $HW_CONFIG_OLD $HW_CONFIG_NEW > patch
 
-#diff -u /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
-chmod +rw hardware-configuration.patch
+chmod +rw patch
 
 echo -e "\nplease remove any incorrect changes from the diff file"
 sleep 2
 
-vim -s hardware-configuration.patch hardware-configuration.patch
+vim -s patch patch
 
-patch -u -b $HW_CONFIG_OLD -i hardware-configuration.patch 
-mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
-mv $HW_CONFIG_OLD /mnt/etc/nixos/
+patch -u -b $HW_CONFIG_OLD -i patch
+#mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
+#mv $HW_CONFIG_OLD /mnt/etc/nixos/hardware-configuration.nix
 
 # List out mounts, btrfs subvols, /mnt discard
 # Prompt to edit config
@@ -217,4 +216,3 @@ done
 # Then install
 cd /mnt
 nixos-install
-
