@@ -29,7 +29,7 @@ echo -e "Done\n"
 lsblk
 DISK_LIST=$(lsblk -l | tail -n +2 | awk '{print $1}')
 
-echo -e "Please select disk:"
+echo -e "\nPlease select disk:"
 echo -e "(WARNING: The selected disk will be completely wiped)\n"
 
 VALID=no
@@ -151,7 +151,7 @@ HW_CONFIG_OLD=/mnt/etc/bak_nixos/hardware-configuration.nix
 HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
 
 # Add user entered swap value to hardware-configuration.nix
-cat $HW_CONFIG_OLD | sed "s/size = (1024 * 8);/size = $SWAP_SIZE;/g" > $HW_CONFIG_OLD
+cat $HW_CONFIG_NEW | sed "s/size = (1024 * 8);/size = $SWAP_SIZE;/g" > $HW_CONFIG_NEW
 
 # Create diff between generated and my hardware-configuration
 diff -u $HW_CONFIG_OLD $HW_CONFIG_NEW > hardware-configuration.patch
@@ -161,7 +161,6 @@ echo -e "\nplease remove any incorrect changes from the diff file"
 sleep 2
 vim -s hardware-configuration.patch hardware_configuration.patch
 
-patch -u -b /mnt/etc/bak_nixos/hardware-configuration.nix -i hardware-configuration.patch
 patch -u -b $HW_CONFIG_OLD -i $HW_CONFIG_NEW
 mv $HW_CONFIG_NEW /mnt/bak_nixos/new_hardware-configuration.nix
 mv $HW_CONFIG_OLD /mnt/etc/nixos/
@@ -181,8 +180,9 @@ do
     echo -e "  3) Edit hardware-configuration.nix"
     echo -e "  4) Cancel install process (or finish install manually)"
     echo -e "  5) Done, run installer now"
+    read INPUT
 
-    case $DONE in
+    case $INPUT in
         1)
             echo -e "\nMount points:"
             mount | grep /mnt
