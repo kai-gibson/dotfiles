@@ -149,51 +149,15 @@ mkdir /mnt/etc/nixos
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/configuration.nix > /mnt/etc/nixos/configuration.nix
 curl https://raw.githubusercontent.com/kai-gibson/dotfiles/nix/.config/nixos/packages.nix > /mnt/etc/nixos/packages.nix
 
-echo -e "Adding swapfile into hardware-configuration.nix"
+echo -e "Enabling swapfile and hibernate in hardware-configuration.nix"
 
 mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
-#sed -i "s/"
 
-# diff --git /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix > hardware-configuration.patch
-# chmod +rw hardware-configuration.patch
-# 
-# echo -e "\nPlease remove any incorrect changes from the patch file"
-# sleep 2
-# vim -s hardware-configuration.patch hardware-configuration.patch
-# 
-# # Not working
-# patch /mnt/etc/bak_nixos/hardware-configuration.nix hardware-configuration.patch
-# mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix
+SWAP_DEVICE='swapDevices = [ { device = "\/swap\/swapfile"; } ];\n\n  boot.resumeDevice = "\/dev\/mapper\/cryptroot";'
 
-# # Testing git diff
-# # First, copy old hw configuration to nixos/
-# cp /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/old-hardware-configuration.nix
-# 
-# # HW_CONFIG_OLD=/mnt/etc/bak_nixos/hardware-configuration.nix
-# # HW_CONFIG_NEW=/mnt/etc/nixos/hardware-configuration.nix
-# 
-# # Add user entered swap value to hardware-configuration.nix
-# #cat /mnt/etc/nixos/hardware-configuration.nix | sed "s/size = (1024 \* 8);/size = $SWAP_SIZE;/g" > /mnt/etc/nixos/hardware-configuration.nix
-# 
-# 
-# # Create diff between generated and my hardware-configuration
-# git diff /mnt/etc/nixos/old-hardware-configuration.nix /mnt/etc/nixos/hardware-configuration.nix --output /mnt/etc/nixos/patch
-# 
-# #chmod +rw patch
-# 
-# echo -e "\nplease remove any incorrect changes from the diff file"
-# sleep 2
-# 
-# vim -s /mnt/etc/nixos/patch /mnt/etc/nxios/patch
-# 
-# git apply /mnt/etc/nixos/patch
-# # patch -u -b $HW_CONFIG_OLD -i patch
-# # mv $HW_CONFIG_NEW /mnt/etc/bak_nixos/new_hardware-configuration.nix
-# # mv $HW_CONFIG_OLD /mnt/etc/nixos/hardware-configuration.nix
-# 
-# # List out mounts, btrfs subvols, /mnt discard
-# # Prompt to edit config
-echo -e "\nPatching complete\n"
+sed -i 's/swapDevices.*/${SWAP_DEVICE}/' /mnt/etc/nixos/hardware-configuration.nix
+
+echo -e "\nChanges complete\n"
 echo -e "Anything else before install?\n"
 
 DONE=no
