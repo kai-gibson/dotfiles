@@ -135,12 +135,17 @@
   system.userActivationScripts = {
       cloneDotfiles = {
           text = ''
-          PATH=$PATH:${lib.makeBinPath [ pkgs.git ]}
-          if [ ! -e $HOME/.dotfiles ]; then
-              git clone -b nix --bare https://github.com/kai-gibson/dotfiles.git /tmp/clonedir/.dotfiles
-              git --git-dir=/tmp/clonedir/.dotfiles --work-tree=/tmp/clonedir checkout
+          PATH=$PATH:${lib.makeBinPath [ pkgs.rsync pkgs.git ]}
+          if [ $USER == "kai" ]; then
+              if [ ! -e ~/.dotfiles ]; then
+                  if [ -e /tmp/clonedir ]; then
+                      rm -rf /tmp/clonedir
+                  fi
 
-              rsync -a /tmp/clonedir $HOME
+                  git clone -b nix --bare https://github.com/kai-gibson/dotfiles.git /tmp/clonedir/.dotfiles
+                  git --git-dir=/tmp/clonedir/.dotfiles --work-tree=/tmp/clonedir checkout
+                  rsync -a /tmp/clonedir/ ~/
+              fi
           fi
           '';
       };
