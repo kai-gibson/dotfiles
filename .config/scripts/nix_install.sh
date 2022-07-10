@@ -20,7 +20,7 @@ fi
 # Installing git
 echo "Installing required tools..."
 
-nix-env -iA nixos.git
+nix-env -iA nixos.git > /dev/null
 
 echo -e "Done\n"
 
