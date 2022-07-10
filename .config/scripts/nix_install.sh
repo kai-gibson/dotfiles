@@ -155,7 +155,7 @@ mv /mnt/etc/bak_nixos/hardware-configuration.nix /mnt/etc/nixos/hardware-configu
 
 SWAP_DEVICE='swapDevices = [ { device = "\/swap\/swapfile"; } ];\n\n  boot.resumeDevice = "\/dev\/mapper\/cryptroot";'
 
-sed -i 's/swapDevices.*/${SWAP_DEVICE}/' /mnt/etc/nixos/hardware-configuration.nix
+sed -i "s/swapDevices.*/${SWAP_DEVICE}/" /mnt/etc/nixos/hardware-configuration.nix
 
 echo -e "\nChanges complete\n"
 echo -e "Anything else before install?\n"
