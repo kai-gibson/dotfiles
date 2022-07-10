@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # Script to install NixOS
+# TODO:
+# - nix-enter --root '/mnt' and rebuild config, set passwd for kai
 
 # Check if script is being run as root
 if [ "$EUID" -ne 0 ]; then
@@ -203,3 +205,6 @@ done
 # Then install
 cd /mnt
 nixos-install
+
+nixos-enter --root /mnt
+nixos-rebuild switch
