@@ -206,5 +206,56 @@ done
 cd /mnt
 nixos-install
 
-nixos-enter --root /mnt
-nixos-rebuild switch
+# Finally, enter into install and setup doftiles and password for user kai
+
+# Set user password  
+VALID=no
+while [ $VALID != "yes" ]
+do
+     echo -e "\nEnter password for kai:"
+     read -s USER_PASS
+
+     echo "Confirm Key:"
+     read -s VALIDATE_USER_PASS
+
+     if [ $USER_PASS == $VALIDATE_USER_PASS ]; then
+         VALID=yes
+     else
+         echo "Passwords don't match, please try again"
+     fi
+done 
+
+echo "echo kai:$USER_PASS | chpasswd" | nixos-enter --root '/mnt'
+
+# Setup dotfiles
+
+GITCMD='su kai\necho ".dotfiles" >> .gitignore\n \ 
+    git clone --bare -b nix \
+    https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles\n \
+    git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout'
+
+echo $GITCMD | nixos-enter --root '/mnt'
+
+# Setup vim-plug
+
+VIMCMD='curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+echo $VIMCMD | nixos-enter --root '/mnt'
+
+# Done! Prompt to reboot
+
+VALID=no
+while [ $VALID != "yes" ]
+do
+    echo -e "\nInstallation finished, reboot now? [y/n]"
+    read INPUT
+
+    if [ $INPUT == "y" ]; then
+        VALID=yes
+    else
+        exit 0
+    fi
+done
+
+reboot
