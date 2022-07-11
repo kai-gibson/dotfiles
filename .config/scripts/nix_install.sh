@@ -229,7 +229,7 @@ echo "echo kai:$USER_PASS | chpasswd" | nixos-enter --root '/mnt'
 
 # Setup dotfiles
 
-GITCMD='su kai\nsh\necho ".dotfiles" >> .gitignore\n 
+GITCMD='su kai\nsh\necho ".dotfiles" >> ~/.gitignore\n 
     git clone --bare -b nix 
     https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles\n 
     git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout'
