@@ -234,14 +234,14 @@ GITCMD='su kai\necho ".dotfiles" >> .gitignore\n \
     https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles\n \
     git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout'
 
-echo $GITCMD | nixos-enter --root '/mnt'
+echo -e $GITCMD | nixos-enter --root '/mnt'
 
 # Setup vim-plug
 
-VIMCMD='curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+VIMCMD='su kai\ncurl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-echo $VIMCMD | nixos-enter --root '/mnt'
+echo -e $VIMCMD | nixos-enter --root '/mnt'
 
 # Done! Prompt to reboot
 
