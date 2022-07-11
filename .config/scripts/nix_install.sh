@@ -230,6 +230,8 @@ echo "echo kai:$USER_PASS | chpasswd" | nixos-enter --root '/mnt'
 # Setup dotfiles
 
 GITCMD='su kai\nsh\necho ".dotfiles" >> ~/.gitignore\n 
+    rm -rf ~/.*\n
+    rm -rf ~/*\n
     git clone --bare -b nix 
     https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles\n 
     git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout'
@@ -238,8 +240,10 @@ echo -e $GITCMD | nixos-enter --root '/mnt'
 
 # Setup vim-plug
 
-VIMCMD='su kai\nsh\ncurl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs 
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+VIMCMD='su kai\n
+    sh\n
+    curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs 
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 echo -e $VIMCMD | nixos-enter --root '/mnt'
 
