@@ -12,7 +12,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline-themes'                           " Status Bar Themes
     Plug 'ryanoasis/vim-devicons'                                   " Icons for various plugins
     Plug 'airblade/vim-gitgutter'                                   " Shows changes in gutter
-    
     " Tools
     Plug 'voldikss/vim-floaterm'
     Plug 'tpope/vim-surround'
@@ -22,6 +21,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'mfussenegger/nvim-dap'
     Plug 'xianzhon/vim-code-runner'
     Plug 'rcarriga/nvim-dap-ui'
+    Plug 'vimwiki/vimwiki'
 
 " Initialize plugin system
 call plug#end()
@@ -70,6 +70,9 @@ nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit lazygit<CR>
 
 " Fuzzy find any file in /home or /media
 nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home /run/media \| fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')<CR>
+
+" Open floating terminal to mess around, close when done
+nmap <leader>t :cd %:p:h <BAR> FloatermNew --opener=edit<CR>
 
 " Note:
 "    "S(" to surround block with brackets
@@ -152,6 +155,32 @@ augroup numbertoggle
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
+
+" Navigate tmux panels with ctrl-hjkl
+if exists('$TMUX')
+  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+    let previous_winnr = winnr()
+    silent! execute "wincmd " . a:wincmd
+    if previous_winnr == winnr()
+      call system("tmux select-pane -" . a:tmuxdir)
+      redraw!
+    endif
+  endfunction
+
+  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+
+  nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
+  nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
+  nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
+  nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
+else
+  map <C-h> <C-w>h
+  map <C-j> <C-w>j
+  map <C-k> <C-w>k
+  map <C-l> <C-w>l
+endif
 
 " === Airline settings === "
 
@@ -299,7 +328,6 @@ dap.configurations.cpp = {
     -- runInTerminal = false,
   },
 }
--- If you want to use this for Rust and C, add something like this:
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
