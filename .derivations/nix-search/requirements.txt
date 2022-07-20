@@ -1,0 +1,3 @@
+pandas
+fuzzwuzzy
+numpy

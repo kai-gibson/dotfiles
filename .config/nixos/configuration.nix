@@ -45,6 +45,9 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Enable gnome keyring
+  services.gnome.gnome-keyring.enable = true;
+  
   # Enable DWM and lightdm
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.windowManager.dwm.enable = true;
@@ -88,6 +91,7 @@
     description = "Kai";
     initialPassword = "abcd";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+    packages =[ (import /home/kai/.derivations/nix-search/default.nix) ];
   };
 
   # Enable automatic login for the user.

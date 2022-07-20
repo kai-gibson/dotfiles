@@ -1,15 +1,44 @@
-#!/usr/bin/env python3
+#!/nix/store/40n9pd613v8fc3x39yjrgs1i7d4q8yl0-python3-3.10.4/bin/python
 
+# A simple python program to search through nixpkgs
+
+import sys
+import pandas as pd
+from fuzzywuzzy import fuzz
 import os
 import re
 import csv
 
-# This script is to be run at boot, it pulls all package names and formats them into a csv
+def find_pkg(search_term, order='reverse'):
 
-# Shell script
-def shell_script(command):
+    data = pd.read_csv("~/.cache/nix_pkgs.csv")
+    closeness = []
     
-    os.system(command)
+    for i in data['pkg_name'].values:
+        closeness.append(fuzz.token_sort_ratio(i, search_term))
+
+    data['closeness'] = closeness
+    sorted_df = data.sort_values(by='closeness', ascending=False)
+    
+    # Print "pkg_full_name version\ndescription"
+    pkg_full_name = sorted_df['pkg_full_name'].to_list()
+    version = sorted_df['version'].to_list()
+    description = sorted_df['description'].to_list()
+
+    if order == 'reverse':
+        for i in range(19, -1, -1):
+            print(i+1, pkg_full_name[i], version[i])
+            if i == 0:
+                print(description[i])
+            else:
+                print(description[i], '\n')
+    else:
+        for i in range(0, 20):
+            print(i+1, pkg_full_name[i], version[i])
+            if i == 19:
+                print(description[i])
+            else:
+                print(description[i], '\n')
 
 def create_dict():
     f = open(os.path.expanduser('~/.cache/nix_pkgs'), "r")
@@ -104,30 +133,31 @@ def dict_to_csv(headers, dict_data):
         writer.writeheader()
         writer.writerows(dict_data)
 
+if sys.argv[1] == "--cache":
+    # Get package database
+    cmd = "nix search nixpkgs > ~/.cache/nix_pkgs;"
+    
+    # Remove colour codes
+    cmd += "sed -i -r 's/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g' ~/.cache/nix_pkgs;"
+    
+    # Remove unnecessary package info
+    cmd += "sed -i 's/\* legacyPackages.x86_64-linux.//g' ~/.cache/nix_pkgs;"
+    
+    # Remove previous nix_pkgs_new if it exists
+    cmd += "if [ -e ~/.cache/nix_pkgs_new.csv ]; then rm ~/.cache/nix_pkgs_new.csv; fi;"
+    
+    
+    # Get data
+    os.system(cmd)
+    
+    # Create csv from the data
+    dict_to_csv(['pkg_full_name', 'pkg_name', 'version', 'description'], 
+            create_dict())
+    
+    # Then replace previous nix_pkgs with the new one
+    # We do this so search can still be used while indexing happens
+    cmd = "mv ~/.cache/nix_pkgs_new.csv ~/.cache/nix_pkgs.csv"
+    os.system(cmd)
 
-# Get package database
-cmd = "nix search nixpkgs > ~/.cache/nix_pkgs;"
-
-# Remove colour codes
-cmd += "sed -i -r 's/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g' ~/.cache/nix_pkgs;"
-
-# Remove unnecessary package info
-cmd += "sed -i 's/\* legacyPackages.x86_64-linux.//g' ~/.cache/nix_pkgs;"
-
-# Remove previous nix_pkgs_new if it exists
-cmd += "if [ -e ~/.cache/nix_pkgs_new.csv ]; then rm ~/.cache/nix_pkgs_new.csv; fi;"
-
-
-# Get data
-os.system(cmd)
-
-# Create csv from the data
-dict_to_csv(['pkg_full_name', 'pkg_name', 'version', 'description'], 
-        create_dict())
-
-# Then replace previous nix_pkgs with the new one
-# We do this so search can still be used while indexing happens
-cmd = "mv ~/.cache/nix_pkgs_new.csv ~/.cache/nix_pkgs.csv"
-os.system(cmd)
-
-
+else:
+    find_pkg(sys.argv[1])
