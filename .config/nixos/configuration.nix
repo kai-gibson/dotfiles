@@ -26,6 +26,15 @@
 
   boot.initrd.systemd.enable = true;
 
+  system.activationScripts = {
+    keychronk2fix.text =
+      ''
+        # Fix for the f-keys of the Keychron K2:
+        echo 1 | tee /sys/module/hid_apple/parameters/swap_opt_cmd >/dev/null
+        echo 1 | tee /sys/module/hid_apple/parameters/swap_fn_leftctrl >/dev/null
+      '';
+  };
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -44,10 +53,15 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  
+  # Battery optimisation
+  powerManagement.powertop.enable = true;
+  services.tlp.enable = true;
+  services.auto-cpufreq.enable = true;
 
   # Enable gnome keyring
   services.gnome.gnome-keyring.enable = true;
-  
+
   # Enable DWM and lightdm
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.windowManager.dwm.enable = true;
@@ -91,7 +105,7 @@
     description = "Kai";
     initialPassword = "abcd";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
-    packages =[ (import /home/kai/.derivations/nix-search/default.nix) ];
+    packages = [ (import /home/kai/.custom-derivations/nix-search/default.nix) ];
   };
 
   # Enable automatic login for the user.

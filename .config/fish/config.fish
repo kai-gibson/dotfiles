@@ -2,10 +2,8 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-set fish_key_bindings fish_user_key_bindings
 # Aliases
 
-alias vim="nvim"
 alias rmm="/usr/bin/env rm"
 alias rm=trash
 alias vx="nvim ~/.config/nixos/packages.nix"

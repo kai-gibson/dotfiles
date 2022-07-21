@@ -2,7 +2,7 @@
 
 sh $HOME/.screenlayout/screenRes.sh &
 sh $HOME/.fehbg &
-sh $HOME/.config/scripts/get_nix_pkgs.sh &
+nix-search --cache &
 dwmblocks &
 picom &
 lxsession &

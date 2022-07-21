@@ -22,6 +22,9 @@
     github-cli
     htop
     moc
+    powertop
+    mimeo
+    file
 
     # Apps
     brave
@@ -30,6 +33,10 @@
     arandr
     logseq
     virt-manager
+    pavucontrol
+    discord
+    flameshot
+    zathura
 
     # System tools
     picom

@@ -4,7 +4,7 @@ python3Packages.buildPythonPackage rec {
   pname = "nix-search";
   version = "0.0.1";
 
-  src = /home/kai/.derivations/nix-search;
+  src = /home/kai/.custom-derivations/nix-search;
   buildInputs = [ python3Packages.pbr ];
   propagatedBuildInputs = with python3Packages; [
     pandas
