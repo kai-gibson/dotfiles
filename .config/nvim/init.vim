@@ -66,10 +66,10 @@ nmap <leader>f :FloatermNew --opener=edit lf<CR>
 nmap <leader>p :cd %:p:h <BAR> FloatermNew --opener=edit fzf<CR>
 
 " Lazygit in buffer DIR 
-nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit lazygit<CR>
+nmap <leader>v :cd %:p:h <BAR> FloatermNew --opener=edit lazygit<CR>
 
 " Live grep all files in directory
-nmap <leader>o :cd %:p:h <BAR> FloatermNew --opener=edit ~/.config/scripts/floaterm_scripts/live_grep.sh<CR>
+nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit ~/.config/scripts/floaterm_scripts/live_grep.sh<CR>
 
 " Fuzzy find any file in /home or /media
 nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home /run/media \| fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')<CR>
@@ -78,17 +78,51 @@ nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home /run/
 nmap <leader>t :cd %:p:h <BAR> FloatermNew --opener=edit<CR>
 
 
+" === Zettelkasten functions ===
 
-" === Zettel functions ===
 " Search file names
-" nmap <leader>zf :cd ~/Documents/Notes/Documents/Writing/<BAR>Telescope find_files<CR>
 nmap <leader>zf :cd ~/Documents/Notes/Documents/Writing/<BAR> FloatermNew --opener=edit fzf<CR>
+
 " Search file contents
-" nmap <leader>zg :cd ~/Documents/Notes/Documents/Writing/<BAR>Telescope live_grep<CR>
 nmap <leader>zg :cd ~/Documents/Notes/Documents/Writing/<BAR> FloatermNew --opener=edit ~/.config/scripts/floaterm_scripts/live_grep.sh<CR>
 
 " Create new Zettel notes
-" 
+nmap <leader>znf :call NewZettel("f", "note")<CR>
+nmap <leader>znl :call NewZettel("l", "note")<CR>
+nmap <leader>znp :call NewZettel("p", "note")<CR>
+nmap <leader>znP :call NewZettel("p", "moc")<CR>
+
+function! NewZettel(f_type, template)
+    let name = input("Enter a title for new note: ")
+    let name = substitute(name, " ", "_", "")
+
+    if a:f_type=="f"
+        execute 'e ' . '~/Documents/Notes/Documents/Writing/fleeting/' . name . '.md'
+    elseif a:f_type=="l"
+        execute 'e ' . '~/Documents/Notes/Documents/Writing/literature/' . name . '.md'
+    elseif a:f_type=="p"
+        execute 'e ' . '~/Documents/Notes/Documents/Writing/permanent/' . name . '.md'
+    endif
+
+    let name = substitute(name, "_", " ", "")
+
+    if a:template=="note"
+        0put='# ' . name
+        put=strftime('%c')
+        put=''
+        put=''
+        put=''
+        put='## References:'
+        put='    1. '
+        execute '4'
+    elseif a:template=="moc"
+        0put='# ' . name
+        put='1. '
+        execute '2'
+        execute 'normal $'
+    endif
+
+endfunction
 
 " Note:
 "    "S(" to surround block with brackets
