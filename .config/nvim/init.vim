@@ -124,6 +124,28 @@ function! NewZettel(f_type, template)
 
 endfunction
 
+" TODO: Write file name to top of file when using ZettelCreate
+function! ZettelCreate(template)
+    execute 'e <cfile>'
+
+    if a:template=="note"
+        0put='# ' . name
+        put=strftime('%c')
+        put=''
+
+        put=''
+        put=''
+        put='## References:'
+        put='    1. '
+        execute '4'
+    elseif a:template=="moc"
+        0put='# ' . name
+        put='1. '
+        execute '2'
+        execute 'normal $'
+    endif
+endfunction
+
 " Note:
 "    "S(" to surround block with brackets
 "    "gc" to comment out block
@@ -214,7 +236,7 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
 
-" Navigate tmux panels with ctrl-hjkl
+"  Navigate tmux panels with ctrl-hjkl
 if exists('$TMUX')
   function! TmuxOrSplitSwitch(wincmd, tmuxdir)
     let previous_winnr = winnr()
