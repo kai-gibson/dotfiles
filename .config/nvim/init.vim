@@ -11,17 +11,17 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline'                                  " Status Bar
     Plug 'vim-airline/vim-airline-themes'                           " Status Bar Themes
     Plug 'ryanoasis/vim-devicons'                                   " Icons for various plugins
-    Plug 'airblade/vim-gitgutter'                                   " Shows changes in gutter
+
     " Tools
     Plug 'voldikss/vim-floaterm'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
+    Plug 'donRaphaco/neotex', { 'for': 'tex' }
 
     " Debugging
     Plug 'mfussenegger/nvim-dap'
     Plug 'xianzhon/vim-code-runner'
     Plug 'rcarriga/nvim-dap-ui'
-    Plug 'vimwiki/vimwiki'
 
 " Initialize plugin system
 call plug#end()
@@ -68,11 +68,27 @@ nmap <leader>p :cd %:p:h <BAR> FloatermNew --opener=edit fzf<CR>
 " Lazygit in buffer DIR 
 nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit lazygit<CR>
 
+" Live grep all files in directory
+nmap <leader>o :cd %:p:h <BAR> FloatermNew --opener=edit ~/.config/scripts/floaterm_scripts/live_grep.sh<CR>
+
 " Fuzzy find any file in /home or /media
 nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home /run/media \| fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')<CR>
 
 " Open floating terminal to mess around, close when done
 nmap <leader>t :cd %:p:h <BAR> FloatermNew --opener=edit<CR>
+
+
+
+" === Zettel functions ===
+" Search file names
+" nmap <leader>zf :cd ~/Documents/Notes/Documents/Writing/<BAR>Telescope find_files<CR>
+nmap <leader>zf :cd ~/Documents/Notes/Documents/Writing/<BAR> FloatermNew --opener=edit fzf<CR>
+" Search file contents
+" nmap <leader>zg :cd ~/Documents/Notes/Documents/Writing/<BAR>Telescope live_grep<CR>
+nmap <leader>zg :cd ~/Documents/Notes/Documents/Writing/<BAR> FloatermNew --opener=edit ~/.config/scripts/floaterm_scripts/live_grep.sh<CR>
+
+" Create new Zettel notes
+" 
 
 " Note:
 "    "S(" to surround block with brackets
@@ -94,6 +110,8 @@ nnoremap <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint
 nmap <leader>dr :call DebuggerUIOpen()<CR>
 nmap <leader>dl :lua require'dap'.run_last()<CR>
 
+" Functions
+
 let g:bool_ui_open=0
 function! DebugRunner()
     if g:bool_ui_open==0
@@ -114,6 +132,11 @@ function! DebuggerUIOpen()
     endif
 endfunction
 
+function! PdfLatex()
+    execute "!pdflatex %"
+    execute "NeoTex"
+    execute "!zathura *.pdf &"
+endfunction
 
 " Run code with rr
 "nmap <leader>rr <plug>CodeRunner
@@ -148,6 +171,7 @@ set mouse=a                 " enable mouse click
 filetype plugin on
 set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
+set conceallevel=2          " Hide symbols for bold/italics when writing in markdown
 
 " Use hybrid line numbers in normal mode, and absolute in insert mode
 augroup numbertoggle
@@ -199,7 +223,6 @@ let g:coc_global_extensions = [
   \ 'coc-clangd',
   \ 'coc-cmake',
   \ 'coc-html',
-  \ 'coc-texlab',
   \ 'coc-pyright',
   \ 'coc-rust-analyzer',
   \ ]
