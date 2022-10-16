@@ -24,7 +24,7 @@ nmap <leader>znj :call NewZettel("j", "note")<CR>
 " New Project note
 nmap <leader>znJ :call NewZettel("j", "index")<CR>
 " New Diary Entry
-nmap <leader>zd :call NewZettel("d", "note")<CR>
+nmap <leader>zd :call NewZettel("d", "diary")<CR>
 
 " Open master index
 nmap <leader>zm :e ~/Documents/Notes/permanent/Master_Index.md<CR>
@@ -83,6 +83,14 @@ function! ZettelTemplate(template, name)
         put=''
         put='## References:'
         put='    1. '
+        execute '4'
+    elseif a:template=="diary"
+        0put='# ' . a:name
+        put=strftime('%c')
+        put=''
+        put=''
+        put=''
+        put='## Completed TODO:'
         execute '4'
     elseif a:template=="index"
         0put='# ' . a:name
