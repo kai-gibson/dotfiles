@@ -78,9 +78,12 @@ cmd trash %set -f; mv $fx ~/.local/share/Trash/files/
 cmd bulkrename $vidir
 
 # Bindings
-map <a-f> $lf -remote "send $id select '$(fzf)'"
-map <a-l> $lf -remote "send $id select '$(fd -H . /home /run/media | fzf)'"
-map <a-g> $lf -remote "send $id select '$(~/.config/scripts/floaterm_scripts/live_grep.sh)'"
+map <space>
+map <space>p $lf -remote "send $id select '$(fzf)'"
+map <space>l $lf -remote "send $id select '$(fd -H . /home /run/media | fzf)'"
+map <space>g $lf -remote "send $id select '$(~/.config/scripts/floaterm_scripts/live_grep.sh)'"
+map J :toggle; down
+map K :up; toggle
 map H set hidden!
 map g
 map gg top
