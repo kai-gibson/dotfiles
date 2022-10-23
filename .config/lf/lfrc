@@ -82,6 +82,7 @@ map <space>
 map <space>p $lf -remote "send $id select '$(fzf)'"
 map <space>l $lf -remote "send $id select '$(fd -H . /home /run/media | fzf)'"
 map <space>g $lf -remote "send $id select '$(~/.config/scripts/floaterm_scripts/live_grep.sh)'"
+map <space>v $lazygit
 map J :toggle; down
 map K :up; toggle
 map H set hidden!
