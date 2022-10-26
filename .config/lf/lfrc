@@ -79,9 +79,12 @@ cmd bulkrename $vidir
 
 # Bindings
 map <space>
-map <space><space> toggle
 map <space>p $lf -remote "send $id select '$(fzf)'"
 map <space>l $lf -remote "send $id select '$(fd -H . /home /run/media | fzf)'"
+map <space>g $lf -remote "send $id select '$(~/.config/scripts/floaterm_scripts/live_grep.sh)'"
+map <space>v $lazygit
+map J :toggle; down
+map K :up; toggle
 map H set hidden!
 map g
 map gg top
@@ -99,8 +102,8 @@ map O $mimeopen --ask $f
 map S $fish; cd .
 map @ push :!<space>$f<c-a><right>
 map d
-map <c-d> $dragon-drop -a -x $f --and-exit
-map dD $trash $f
+map <c-d> $dragon-drop -A -x $fx --and-exit
+map dD $trash $fx
 map dd cut
 map jk <esc>
 

@@ -66,6 +66,10 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.windowManager.dwm.enable = true;
 
+  # Enable bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   # Enable virtualisation
   virtualisation.libvirtd.enable = true;
   programs.dconf.enable = true;

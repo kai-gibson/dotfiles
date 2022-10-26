@@ -1,4 +1,7 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: 
+let
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+in {
   environment.systemPackages = with pkgs; [
     # Terminal utilities
     git
@@ -25,7 +28,9 @@
     powertop
     mimeo
     file
-
+    xclip
+    bluez
+  
     # Apps
     brave
     rofi
@@ -34,10 +39,11 @@
     logseq
     virt-manager
     pavucontrol
-    discord
     flameshot
     zathura
-
+    discord
+    zotero
+  
     # System tools
     picom
     lxsession
@@ -46,25 +52,29 @@
     udiskie
     cbatticon
     nextcloud-client
-
+  
     # Libraries, themes 
     tela-icon-theme
     nordic
-    python
+    #python3
+    #jdk11
     nodejs
-
+    gcc
+    zsh-autosuggestions
+    zsh-fast-syntax-highlighting
   ];
- 
+  
+  
   ## PACKAGE CONFIG ##
-
+  
   # Fonts
-
+  
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
   
   # Package overlays
-
+  
   /* nixpkgs.overlays = [ */
   /*   (self: super: { */
   /*     dwm = super.dwm.overrideAttrs (_: { src = /home/kai/.config/dwm-kai;}); */
@@ -73,7 +83,7 @@
   /*     dwmblocks = super.dwmblocks.overrideAttrs (_: { src = /home/kai/.config/dwmblocks-kai;}); */
   /*   }) */
   /* ]; */
-
+  
   nixpkgs.overlays = [
     (self: super: {
       dwm = super.dwm.overrideAttrs (_: { 
@@ -83,7 +93,7 @@
           };
       });
     })
-
+  
     (self: super: {
       dwmblocks = super.dwmblocks.overrideAttrs (_: { 
           src = builtins.fetchGit {
@@ -92,7 +102,7 @@
           };
       });
     })
-
+  
     (self: super: {
         neovim = super.neovim.override {
             viAlias = true;
@@ -100,6 +110,10 @@
         };
     })
   ];
-
-  users.defaultUserShell = pkgs.fish;
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+  }; 
 }
