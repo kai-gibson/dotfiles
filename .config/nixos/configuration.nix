@@ -31,7 +31,7 @@
       ''
         # Fix for the f-keys of the Keychron K2:
         echo 1 | tee /sys/module/hid_apple/parameters/swap_opt_cmd >/dev/null
-        echo 1 | tee /sys/module/hid_apple/parameters/swap_fn_leftctrl >/dev/null
+        #echo 1 | tee /sys/module/hid_apple/parameters/swap_fn_leftctrl >/dev/null
       '';
   };
 
