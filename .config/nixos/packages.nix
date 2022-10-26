@@ -11,7 +11,7 @@ in {
     bat
     fd
     fzf
-    lazygit
+    unstable.lazygit
     neovim
     p7zip
     ripgrep

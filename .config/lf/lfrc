@@ -99,7 +99,7 @@ map x $$f
 map X !$f
 map o &mimeopen $f
 map O $mimeopen --ask $f
-map S $fish; cd .
+map S $zsh; cd .
 map @ push :!<space>$f<c-a><right>
 map d
 map <c-d> $dragon-drop -A -x $fx --and-exit
