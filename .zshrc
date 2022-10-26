@@ -5,8 +5,15 @@ parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
+check_is_shell() {
+    if [[ "$IN_NIX_SHELL" ]]; then
+        #export NIX_VAR_SHELL="nix-shell"
+        echo "(nix-shell) "
+    fi
+}
+
 setopt PROMPT_SUBST
-PROMPT="%F{green}%n%f@%m %{%F{blue}%}%1~%{%F{green}%}$(parse_git_branch)%{%F{none}%} %F{green}~%f> "
+PROMPT="$(check_is_shell)%F{green}%n%f@%m %{%F{blue}%}%1~%{%F{green}%}$(parse_git_branch)%{%F{none}%} %F{green}~%f> "
 # Custom Variables
 EDITOR=nvim
 
@@ -30,8 +37,9 @@ setopt NO_BEEP
 bindkey -e
 
 # Load plugins
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
-source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+source /home/kai/.zsh-plug/zsh-nix-shell/nix-shell.plugin.zsh 2>/dev/null
+#source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
+#source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 #source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 #source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh 2>/dev/null
 
