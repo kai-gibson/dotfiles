@@ -59,7 +59,7 @@ alias lf=lfub
 alias weather="curl wttr.in"
 alias config='/usr/bin/env git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias lazyconfig="lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-alias calc="noglob calc"
+#alias calc="noglob calc"
 
 # Path
 export PATH=$PATH:~/.local/bin

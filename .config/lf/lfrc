@@ -102,7 +102,7 @@ map O $mimeopen --ask $f
 map S $zsh; cd .
 map @ push :!<space>$f<c-a><right>
 map d
-map <c-d> $dragon-drop -A -x $fx --and-exit
+map <c-d> $dragon -A -x $fx --and-exit
 map dD $trash $fx
 map dd cut
 map jk <esc>
