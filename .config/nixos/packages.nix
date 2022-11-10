@@ -43,7 +43,10 @@ in {
     zathura
     discord
     zotero
-  
+    unstable.signal-desktop
+    darktable
+    calibre
+
     # System tools
     picom
     lxsession

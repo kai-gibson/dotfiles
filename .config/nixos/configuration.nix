@@ -42,6 +42,16 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+  # Add hosts to block websites
+  networking.extraHosts =
+    ''
+      #127.0.0.1 www.reddit.com
+      #127.0.0.1 reddit.com
+      #127.0.0.1 youtube.com
+      #127.0.0.1 www.youtube.com
+      127.0.0.1 twitter.com
+    '';
+
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -109,8 +119,10 @@
     description = "Kai";
     initialPassword = "abcd";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
-    packages = [ (import /home/kai/.custom-derivations/nix-search/default.nix) ];
-  };
+    packages = [ (import
+    /home/kai/.custom-derivations/nix-search/default.nix) ];
+
+    };
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
