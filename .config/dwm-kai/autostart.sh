@@ -2,7 +2,7 @@
 
 dwmblocks &
 sh $HOME/.fehbg &
-picom --experimental-backends &
+picom &
 lxsession &
 udiskie &
 cbatticon -u 20 -i standard -c "poweroff" -l 15 -r 5 &
