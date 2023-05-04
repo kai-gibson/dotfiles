@@ -10,6 +10,7 @@ PROMPT="%F{10}%n%f@%m %{%F{blue}%}%1~%{%F{green}%}$(parse_git_branch)%{%F{none}%
 
 # Custom Variables
 EDITOR=nvim
+BROWSER=brave
 
 # History in cache directory:
 HISTSIZE=10000
@@ -63,10 +64,10 @@ sh /home/kai/.config/scripts/tmuxStart.sh
 export EDITOR='nvim'
 
 # This is the list for lf icons:
-export LF_ICONS="di=📁:\
+export LF_ICONS="di=:\
 fi=:\
-tw=🤝:\
-ow=📂:\
+tw=:\
+ow=:\
 ln=:\
 or=❌:\
 ex=:⌖\
@@ -85,52 +86,52 @@ ex=:⌖\
 *.tif=:\
 *.tiff=:\
 *.xcf=🖌:\
-*.html=🌎:\
-*.xml=📰:\
+*.html=󰇧:\
+*.xml=:\
 *.gpg=🔒:\
-*.css=🎨:\
+*.css=:\
 *.pdf=:\
 *.djvu=:\
 *.epub=:\
 *.csv=:\
 *.xlsx=:\
-*.tex=📜:\
-*.md=📜:\
-*.r=📜:\
-*.R=📜:\
-*.rmd=📜:\
-*.Rmd=📜:\
-*.m=📜:\
+*.tex=:\
+*.md=:\
+*.r=:\
+*.R=:\
+*.rmd=:\
+*.Rmd=:\
+*.m=:\
 *.mp3=🎵:\
 *.opus=🎵:\
 *.ogg=🎵:\
 *.m4a=🎵:\
 *.flac=🎵:\
 *.wav=🎵:\
-*.mkv=:\
+*.mkv=󰎁:\
 *.mp4=🎵:\
-*.webm=:\
-*.mpeg=:\
-*.avi=:\
-*.mov=:\
-*.mpg=:\
-*.wmv=:\
-*.m4b=:\
-*.flv=:\
-*.zip=📦:\
-*.rar=📦:\
-*.7z=📦:\
-*.tar.gz=📦:\
+*.webm=󰎁:\
+*.mpeg=󰎁:\
+*.avi=󰎁:\
+*.mov=󰎁:\
+*.mpg=󰎁:\
+*.wmv=󰎁:\
+*.m4b=󰎁:\
+*.flv=󰎁:\
+*.zip=:\
+*.rar=:\
+*.7z=:\
+*.tar.gz=:\
 *.1=ℹ:\
 *.nfo=ℹ:\
 *.info=ℹ:\
-*.log=📙:\
-*.iso=📀:\
-*.img=📀:\
-*.bib=🎓:\
-*.ged=👪:\
-*.part=💔:\
-*.torrent=🔽:\
+*.log=:\
+*.iso=󰗮:\
+*.img=󰗮:\
+*.bib=:\
+*.ged=:\
+*.part=󰋔:\
+*.torrent=󰍇:\
 *.jar=♨:\
 *.java=♨:\
 "
