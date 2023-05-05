@@ -1,5 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
 /* appearance */
 #if ROUNDED_CORNERS_PATCH
 static const unsigned int borderpx       = 0;   /* border pixel of windows */
@@ -817,8 +818,13 @@ static const char *dmenucmd[] = {
 	#endif // BAR_DMENUMATCHTOP_PATCH
 	NULL
 };
-static const char *termcmd[]  = { "kitty", NULL };
-static const char *roficmd[] = { "bash", "/home/kai/.config/rofi/launchers/colorful/launcher.sh", NULL };
+static const char *termcmd[]    = { "kitty", NULL };
+static const char *roficmd[]    = { "bash", "/home/kai/.config/rofi/launchers/colorful/launcher.sh", NULL };
+static const char *brightUp[]   = { "bash", "/home/kai/.local/bin/bright", "+", NULL };
+static const char *brightDown[] = { "bash", "/home/kai/.local/bin/bright", "-", NULL };
+static const char *upVol[]      = { "amixer", "set", "Master", "10+",       NULL };
+static const char *downVol[]    = { "amixer", "set", "Master", "10-",       NULL };
+static const char *muteVol[]    = { "bash", "/home/kai/.config/scripts/toggleMute.sh",  NULL };
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -851,6 +857,11 @@ static Key keys[] = {
 	#endif // KEYMODES_PATCH
 	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
+	{ 0,                            XF86XK_MonBrightnessUp,     spawn,     {.v = brightUp } },
+	{ 0,                            XF86XK_MonBrightnessDown,   spawn,     {.v = brightDown } },
+	{ 0,                            XF86XK_AudioLowerVolume,    spawn,     {.v = downVol } },
+	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,     {.v = upVol } },
+	{ 0,                            XF86XK_AudioMute,           spawn,     {.v = muteVol } },
 	#if RIODRAW_PATCH
 	{ MODKEY|ControlMask,           XK_p,          riospawnsync,           {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
