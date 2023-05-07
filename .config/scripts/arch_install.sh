@@ -132,7 +132,10 @@ echo -e "\nSwap creation finished"
 
 # Get swap device size if I want to hibernate?
 
+echo -e "\nInstalling essential packages"
 # Install essential packages
+
+reflector > /etc/pacman.d/mirrorlist
 PACSTRAP="linux 
          linux-firmware
          base
@@ -155,11 +158,11 @@ pacstrap -K /mnt $PACSTRAP
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # Enter into chroot, setup timezone & localisation
-CHROOT_CMD="ln -sf /usr/share/zoneinfo/Australia/Melbourne /etc/localtime\n
-            hwclock --systohc\n
-            sed -i '/en_AU.UTF-8 UTF-8/s/^#//g' /etc/locale.gen\n
-            locale-gen\n
-            echo 'arch' > /etc/hostname\n
+CHROOT_CMD="ln -sf /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
+            hwclock --systohc
+            sed -i '/en_AU.UTF-8 UTF-8/s/^#//g' /etc/locale.gen
+            locale-gen
+            echo 'arch' > /etc/hostname
             "
 arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
 
@@ -182,9 +185,9 @@ do
      fi
 done 
 
-CHROOT_CMD="useradd -m kai\n
-            echo $USER_PASS | passwd kai\n
-            sed '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /etc/sudoers\n
+CHROOT_CMD="useradd -m kai
+            echo $USER_PASS | passwd kai
+            sed '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /etc/sudoers
             "
 
 arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
