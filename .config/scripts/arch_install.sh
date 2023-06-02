@@ -191,6 +191,9 @@ CHROOT_CMD="useradd -m kai
             "
 
 arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
+
+
+
 #
 ## Finally, enter into install and setup doftiles and password for user kai
 #
