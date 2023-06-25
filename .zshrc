@@ -6,7 +6,9 @@ parse_git_branch() {
 }
 
 setopt PROMPT_SUBST
-PROMPT="%F{10}%n%f@%m %{%F{blue}%}%1~%{%F{green}%}$(parse_git_branch)%{%F{none}%} %F{10}~%f> "
+# Old
+#PROMPT="%F{10}%n%f@%m %{%F{blue}%}%1~%{%F{green}%}$(parse_git_branch)%{%F{none}%} %F{10}~%f> "
+PROMPT="%F{10}%n%f@%m %{%F{blue}%}%1~%{%F{green}%}$(parse_git_branch)%{%F{none}%} ~> "
 
 # Custom Variables
 EDITOR=nvim
@@ -34,21 +36,44 @@ bindkey -e
 # Load plugins
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+source /home/kai/.config/scripts/lfcd.sh
 #source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 #source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh 2>/dev/null
 
+# Custom functions
+# lfcd () {
+#     tmp="$(mktemp)"
+#     # `command` is needed in case `lfcd` is aliased to `lf`
+#     command lfub -last-dir-path="$tmp" "$@"
+#     if [ -f "$tmp" ]; then
+#         dir="$(cat "$tmp")"
+#         rm -f "$tmp"
+#         if [ -d "$dir" ]; then
+#             if [ "$dir" != "$(pwd)" ]; then
+#                 cd "$dir"
+#             fi
+#         fi
+#     fi
+# }
+
 # Aliases
-alias ls='ls --color=auto'
+alias ls="ls -hN --color=auto --group-directories-first"
+alias grep="grep --color=auto"
+alias diff="diff --color=auto"
 alias vim="nvim"
 alias rmm="/usr/bin/env rm"
-alias rm=trash
+alias rm="trash"
+alias cp="cp"
+alias mv="mv"
+alias mkdir="mkdir"
 alias hardrm="bleachbit --shred"
 alias screenSwap="sh /home/kai/.config/scripts/screenSwap.sh"
 alias hibernate="systemctl hibernate"
 alias pac="paru"
+alias vx="vim ~/.local/share/pac/pkgList"
 alias sys="sudo systemctl"
-alias bright="xrandr --output eDP-1 --brightness"
-alias lf=lfub
+#alias bright="xrandr --output eDP-1 --brightness"
+alias lf=lfcd
 alias weather="curl wttr.in"
 alias config='/usr/bin/env git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias lazyconfig="lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME"

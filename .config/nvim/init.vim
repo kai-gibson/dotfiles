@@ -2,13 +2,14 @@
 call plug#begin('~/.vim/plugged')
 
     " Coding
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}                 " Code Completions
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Code Completions
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/playground'
    
     " Visual
-    Plug 'vim-airline/vim-airline'                                  " Status Bar
-    Plug 'vim-airline/vim-airline-themes'                           " Status Bar Themes
-    Plug 'ryanoasis/vim-devicons'                                   " Icons for various plugins
+    Plug 'vim-airline/vim-airline'          " Status Bar
+    Plug 'vim-airline/vim-airline-themes'   " Status Bar Themes
+    Plug 'ryanoasis/vim-devicons'           " Icons for various plugins
 
     " Tools
     Plug 'voldikss/vim-floaterm'
@@ -101,7 +102,7 @@ nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
 nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
 nnoremap <A-b> <Cmd>lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-" Open debugging UI with space"rd"
+" Open debugging UI with space'rd'
 nmap <leader>dr :call DebuggerUIOpen()<CR>
 nmap <leader>dl :lua require'dap'.run_last()<CR>
 
@@ -139,32 +140,32 @@ endfunction
 
 " === Options === "
 
-set updatetime=300          " don't give ins-completion-menu messages.
-set shortmess+=c            " always show signcolumns
+set updatetime=300          " Don't give ins-completion-menu messages.
+set shortmess+=c            " Always show signcolumns
 set signcolumn=yes
 syntax on                   " Syntax highlighting
 set hidden
 set encoding=utf8
 set history=5000
-set nocompatible            " disable compatibility to old-time vi
-set showmatch               " show matching 
-set ignorecase              " case insensitive 
+set nocompatible            " Disable compatibility to old-time vi
+set showmatch               " Show matching 
+set ignorecase              " Case insensitive 
 set smartcase
 set nohlsearch              " Don't highlight search 
-set incsearch               " incremental search
-set tabstop=4               " number of columns occupied by a tab 
-set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right 
-set expandtab               " converts tabs to white space
-set shiftwidth=4            " width for autoindents
-set autoindent              " indent a new line the same amount as the line just typed
+set incsearch               " Incremental search
+set tabstop=4               " Number of columns occupied by a tab 
+set softtabstop=4           " See multiple spaces as tabstops so <BS> does the right 
+set expandtab               " Converts tabs to white space
+set shiftwidth=4            " Width for autoindents
+set autoindent              " Indent a new line the same amount as the line just typed
 set smartindent
-set number                  " add line numbers
-set wildmode=longest,list   " get bash-like tab completions
-filetype plugin indent on   "allow auto-indenting depending on file type
-syntax on                   " syntax highlighting
-set mouse=a                 " enable mouse click
+set number                  " Add line numbers
+set wildmode=longest,list   " Get bash-like tab completions
+filetype plugin indent on   " Allow auto-indenting depending on file type
+syntax on                   " Syntax highlighting
+set mouse=a                 " Enable mouse click
 filetype plugin on
-set cursorline              " highlight current cursorline
+set cursorline              " Highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
 set conceallevel=2          " Hide symbols for bold/italics when writing in markdown
 set textwidth=72

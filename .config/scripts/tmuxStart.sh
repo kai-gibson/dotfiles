@@ -7,6 +7,6 @@ fi
 tmux new-session -d -n "dev"
 tmux neww -d -n "var"
 tmux neww -d -n "etc"
-tmux neww -d -n "mp3" 'mocp-scrobbler.py -d; mocp'
+tmux neww -d -n "mp3" mocp
 
 tmux a

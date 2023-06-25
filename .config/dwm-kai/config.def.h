@@ -818,8 +818,10 @@ static const char *dmenucmd[] = {
 	#endif // BAR_DMENUMATCHTOP_PATCH
 	NULL
 };
+
 static const char *termcmd[]    = { "kitty", NULL };
 static const char *roficmd[]    = { "bash", "/home/kai/.config/rofi/launchers/colorful/launcher.sh", NULL };
+static const char *kaiDmenuCmd[]   = { "dmenu_run", "-c", "-l", "10", "-F", "-i", NULL };
 static const char *brightUp[]   = { "bash", "/home/kai/.local/bin/bright", "+", NULL };
 static const char *brightDown[] = { "bash", "/home/kai/.local/bin/bright", "-", NULL };
 static const char *upVol[]      = { "amixer", "set", "Master", "10+",       NULL };
@@ -1024,7 +1026,7 @@ static Key keys[] = {
 	{ MODKEY|Mod5Mask|Mod1Mask,     XK_Tab,        rotatelayoutaxis,       {.i = -4 } },   /* flextile, 4 = secondary stack axis */
 	{ MODKEY|ControlMask,           XK_Return,     mirrorlayout,           {0} },          /* flextile, flip master and stack areas */
 	#endif // FLEXTILE_DELUXE_LAYOUT
-	{ MODKEY,                       XK_space,      spawn,              {.v = roficmd } },
+	{ MODKEY,                       XK_space,      spawn,              {.v = kaiDmenuCmd } },
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
 	#if MAXIMIZE_PATCH
 	{ MODKEY|ControlMask|ShiftMask, XK_h,          togglehorizontalmax,    {0} },
