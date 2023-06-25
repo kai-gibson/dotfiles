@@ -828,6 +828,7 @@ static const char *upVol[]       = { "amixer", "set", "Master", "10+",       NUL
 static const char *downVol[]     = { "amixer", "set", "Master", "10-",       NULL };
 static const char *muteVol[]     = { "bash", "/home/kai/.config/scripts/toggleMute.sh",  NULL };
 static const char *emoji[]       = { "bash", "/home/kai/.local/bin/dmenuunicode", "i", NULL };
+static const char *slock[]       = { "slock", NULL };
 //static const char *emoji[]       = { "bash", "/home/kai/.local/bin/dmenuunicode", "i", NULL };
 
 #if BAR_STATUSCMD_PATCH
@@ -866,6 +867,7 @@ static Key keys[] = {
 	{ 0,                            XF86XK_AudioLowerVolume,    spawn,     {.v = downVol } },
 	{ 0,                            XF86XK_AudioRaiseVolume,    spawn,     {.v = upVol } },
 	{ 0,                            XF86XK_AudioMute,           spawn,     {.v = muteVol } },
+	{ MODKEY|ShiftMask,             XK_l,                       spawn,     {.v = slock } },
 	#if RIODRAW_PATCH
 	{ MODKEY|ControlMask,           XK_p,          riospawnsync,           {.v = dmenucmd } },
 	{ MODKEY|ControlMask,           XK_Return,     riospawn,               {.v = termcmd } },
