@@ -10,4 +10,4 @@ nextcloud --background &
 nm-applet --no-agent &
 brave &
 #logseq &
-kitty &
+st &

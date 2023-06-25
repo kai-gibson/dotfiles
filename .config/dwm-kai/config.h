@@ -444,7 +444,7 @@ static const Rule rules[] = {
 	RULE(.title = "Spotify", .tags = 1 << 4)
 	RULE(.title = "Event Tester", .noswallow = 1)
 	RULE(.class = "Gimp", .tags = 1 << 5)
-    RULE(.class = "kitty", .tags = 1 << 2, .isterminal = 1)
+    RULE(.class = "st", .tags = 1 << 2, .isterminal = 1)
 	#if SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 	#endif // SCRATCHPADS_PATCH
@@ -819,14 +819,16 @@ static const char *dmenucmd[] = {
 	NULL
 };
 
-static const char *termcmd[]    = { "kitty", NULL };
-static const char *roficmd[]    = { "bash", "/home/kai/.config/rofi/launchers/colorful/launcher.sh", NULL };
-static const char *kaiDmenuCmd[]   = { "dmenu_run", "-c", "-l", "10", "-F", "-i", NULL };
-static const char *brightUp[]   = { "bash", "/home/kai/.local/bin/bright", "+", NULL };
-static const char *brightDown[] = { "bash", "/home/kai/.local/bin/bright", "-", NULL };
-static const char *upVol[]      = { "amixer", "set", "Master", "10+",       NULL };
-static const char *downVol[]    = { "amixer", "set", "Master", "10-",       NULL };
-static const char *muteVol[]    = { "bash", "/home/kai/.config/scripts/toggleMute.sh",  NULL };
+static const char *termcmd[]     = { "st", NULL };
+//static const char *roficmd[]     = { "bash", "/home/kai/.config/rofi/launchers/colorful/launcher.sh", NULL };
+static const char *kaiDmenuCmd[] = { "dmenu_run", "-c", "-l", "10", "-F", "-i", NULL };
+static const char *brightUp[]    = { "bash", "/home/kai/.local/bin/bright", "+", NULL };
+static const char *brightDown[]  = { "bash", "/home/kai/.local/bin/bright", "-", NULL };
+static const char *upVol[]       = { "amixer", "set", "Master", "10+",       NULL };
+static const char *downVol[]     = { "amixer", "set", "Master", "10-",       NULL };
+static const char *muteVol[]     = { "bash", "/home/kai/.config/scripts/toggleMute.sh",  NULL };
+static const char *emoji[]       = { "bash", "/home/kai/.local/bin/dmenuunicode", "i", NULL };
+//static const char *emoji[]       = { "bash", "/home/kai/.local/bin/dmenuunicode", "i", NULL };
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -1027,6 +1029,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Return,     mirrorlayout,           {0} },          /* flextile, flip master and stack areas */
 	#endif // FLEXTILE_DELUXE_LAYOUT
 	{ MODKEY,                       XK_space,      spawn,              {.v = kaiDmenuCmd } },
+	{ MODKEY,                       XK_grave,      spawn,              {.v = emoji } },
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
 	#if MAXIMIZE_PATCH
 	{ MODKEY|ControlMask|ShiftMask, XK_h,          togglehorizontalmax,    {0} },
