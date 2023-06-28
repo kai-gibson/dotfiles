@@ -13,14 +13,13 @@ call plug#begin('~/.vim/plugged')
 
     " Tools
     Plug 'voldikss/vim-floaterm'
-    Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-commentary'
+    " Plug 'tpope/vim-surround'
+    " Plug 'tpope/vim-commentary'
     Plug 'dhruvasagar/vim-table-mode'   
     Plug 'donRaphaco/neotex', { 'for': 'tex' }
 
     " Debugging
     Plug 'mfussenegger/nvim-dap'
-    Plug 'xianzhon/vim-code-runner'
     Plug 'rcarriga/nvim-dap-ui'
 
 " Initialize plugin system
@@ -94,7 +93,10 @@ map gv :vertical wincmd f<cr>
 " === Debugging Remaps ===
 
 " Run code with F4
-nnoremap <silent> <F4> <plug>CodeRunner                                                                     
+"
+nnoremap <C-x> :!compiler %<CR>
+nnoremap <silent> <F4> :!compiler %<CR>
+" nnoremap <silent> <F4> <plug>CodeRunner                                                                     
 " Start Debugger with F5
 nnoremap <silent> <F5> :call DebugRunner()<CR>
 nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
@@ -140,6 +142,8 @@ endfunction
 
 " === Options === "
 
+packadd termdebug
+let g:termdebug_wide=1
 set updatetime=300          " Don't give ins-completion-menu messages.
 set shortmess+=c            " Always show signcolumns
 set signcolumn=yes
