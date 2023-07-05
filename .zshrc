@@ -78,6 +78,8 @@ alias weather="curl wttr.in"
 alias config='/usr/bin/env git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias lazyconfig="lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias calc="noglob calc"
+# This could be optimised, might replace cbatticon with it
+alias batt="upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | grep -o -E '[^ ]*%'"
 
 # Path
 export PATH=$PATH:~/.local/bin
