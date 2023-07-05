@@ -7,9 +7,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-treesitter/playground'
    
     " Visual
-    Plug 'vim-airline/vim-airline'          " Status Bar
-    Plug 'vim-airline/vim-airline-themes'   " Status Bar Themes
-    Plug 'ryanoasis/vim-devicons'           " Icons for various plugins
+    "Plug 'vim-airline/vim-airline'          " Status Bar
+    "Plug 'vim-airline/vim-airline-themes'   " Status Bar Themes
+    "Plug 'ryanoasis/vim-devicons'           " Icons for various plugins
+    "Plug 'dstein64/vim-startuptime'
+    "Plug 'bling/vim-bufferline'
 
     " Tools
     Plug 'voldikss/vim-floaterm'
@@ -25,7 +27,10 @@ call plug#begin('~/.vim/plugged')
 " Initialize plugin system
 call plug#end()
 
+
 " === Remaps === "
+
+
 
 let mapleader = " "
 
@@ -54,13 +59,13 @@ noremap <C-p> "+p
 noremap <C-y> "+y
 
 " Buffer stuff
-noremap <C-n> :bnext<CR>
-noremap <C-b> :bprevious<CR> <ESC>
+nnoremap <C-n> :bnext<CR>
+nnoremap <C-b> :bprevious<CR>
 
-" Close the current buffer and move to the previous one
-nmap <leader>bd :bp <BAR> bd #<CR>
-" Close the current buffer and move to the previous one
-nmap <leader>bD :bp <BAR> bd! #<CR>
+" Close the current buffer
+nmap <leader>bd :bd<CR>
+" Force close the current buffer
+nmap <leader>bD :bd!<CR>
 
 " Floaterm keybindings
 " Open lf in floating terminal 
@@ -94,7 +99,7 @@ map gv :vertical wincmd f<cr>
 
 " Run code with F4
 "
-nnoremap <C-x> :!compiler %<CR>
+nnoremap <leader>x :!compiler %<CR>
 nnoremap <silent> <F4> :!compiler %<CR>
 " nnoremap <silent> <F4> <plug>CodeRunner                                                                     
 " Start Debugger with F5
@@ -143,10 +148,12 @@ endfunction
 " === Options === "
 
 packadd termdebug
+
 let g:termdebug_wide=1
 set updatetime=300          " Don't give ins-completion-menu messages.
 set shortmess+=c            " Always show signcolumns
 set signcolumn=yes
+hi SignColumn ctermbg=none  " no bg colour for signcolumn
 syntax on                   " Syntax highlighting
 set hidden
 set encoding=utf8
@@ -175,8 +182,11 @@ set conceallevel=2          " Hide symbols for bold/italics when writing in mark
 set textwidth=72
 set colorcolumn=73
 highlight ColorColumn ctermbg=blue
-set formatoptions-=c formatoptions-=r formatoptions-=o " Disable autocomments
 hi Floaterm guibg=black
+" test
+
+
+autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 " Use hybrid line numbers in normal mode, and absolute in insert mode
 augroup numbertoggle
   autocmd!
