@@ -132,5 +132,14 @@ function! MyStatusline()
 endfunction
 
 au BufEnter,BufNew,BufDelete,BufWinEnter,BufModifiedSet * let &l:statusline=MyStatusline()."%#Status_Bg#%=\ %F\ %#Status_Fg#\ %l/%L\ lines\ "
+" Without buftabs
+"let &l:statusline="%#Status_Bg#%=\ %F\ %#Status_Fg#\ %l/%L\ lines\ "
+
+" Winbar is the neovim top bar
 "au BufEnter,BufNew,BufDelete,BufWinEnter,BufModifiedSet * let &winbar=MyStatusline()."%#Status_Bg#%=\ %F\ %#Status_Fg#\ %l/%L\ lines\ "
 "au BufEnter,BufNew,BufDelete,BufWinEnter,BufModifiedSet * let &winbar=MyStatusline()."%#Normal_NC#"
+
+" This replaces the tabline at the top with my bufferlist 
+"set showtabline=2
+"au BufEnter,BufNew,BufDelete,BufWinEnter,BufModifiedSet * let &tabline=MyStatusline()."%#LineNr#%=\ %F\ %#Status_Fg#\ %l/%L\ lines\ "
+"au BufEnter,BufNew,BufDelete,BufWinEnter,BufModifiedSet * let &tabline=MyStatusline().'%#LineNr#'
