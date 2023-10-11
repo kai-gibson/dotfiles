@@ -14,7 +14,7 @@ shift # remove filename arg
 dir=${file%/*}
 base="${file%.*}"
 ext="${file##*.}"
-cxx_args=(-fsanitize=address,undefined,leak -O0 -g3 -pthread -gdwarf-4 -DLinux -fPIC -Wno-deprecated -pipe -fno-elide-type -fdiagnostics-show-template-tree -Wall -Werror -Wextra -Wpedantic -Wvla -Wextra-semi -Wnull-dereference -Wswitch-enum -fvar-tracking-assignments -Wduplicated-cond -Wduplicated-branches -rdynamic -Wsuggest-override -MMD -MP)
+cxx_args="-fsanitize=address,undefined,leak -O0 -g3 -pthread -gdwarf-4 -DLinux -fPIC -Wno-deprecated -pipe -fno-elide-type -fdiagnostics-show-template-tree -Wall -Werror -Wextra -Wpedantic -Wvla -Wextra-semi -Wnull-dereference -Wswitch-enum -fvar-tracking-assignments -Wduplicated-cond -Wduplicated-branches -rdynamic -Wsuggest-override -MMD -MP"
 
 cd "$dir" || exit 1
 
@@ -34,7 +34,8 @@ case "$ext" in
 	# Try to keep these cases in alphabetical order.
 	[0-9]) preconv "$file" | refer -PS -e | groff -mandoc -T pdf > "$base".pdf ;;
 	c) cc "$file" -o "$base" && "$base" ;;
-	cpp|cxx) g++ "$@" "${cxx_args[@]}" "$file" -o "$base" && "$base" ;;
+	cpp|cxx) g++ "$@" $cxx_args "$file" -o "$base" && "$base" ;;
+	#cpp|cxx) g++ "$@" "${cxx_args[@]}" "$file" -o "$base" && "$base" ;;
 	cs) mcs "$file" && mono "$base".exe ;;
 	go) go run "$file" ;;
 	h) sudo make install ;;
@@ -57,5 +58,6 @@ case "$ext" in
 	scad) openscad -o "$base".stl "$file" ;;
 	sent) setsid -f sent "$file" 2>/dev/null ;;
 	tex) textype "$file" ;;
+    lisp|cl|lsp) sbcl --script "$file";;
 	*) sed -n '/^#!/s/^#!//p; q' "$file" | xargs -r -I % "$file" ;;
 esac

@@ -13,5 +13,43 @@
         "graphql"
     ],
     "snippets.ultisnips.pythonPrompt": false,
-    "clangd.path": "/usr/bin/clangd"
+    "clangd.path": "/usr/bin/clangd",
+    "languageserver": {
+        "slint": {
+            "command": "slint-lsp",
+            "filetypes": [
+                "slint"
+            ]
+        },
+        "haskell": {
+            "command": "haskell-language-server-wrapper",
+            "args": [
+                "--lsp"
+            ],
+            "rootPatterns": [
+                "*.cabal",
+                "stack.yaml",
+                "cabal.project",
+                "package.yaml",
+                "hie.yaml"
+            ],
+            "filetypes": [
+                "haskell",
+                "lhaskell"
+            ],
+            "settings": {
+                "haskell": {
+                    "checkParents": "CheckOnSave",
+                    "checkProject": true,
+                    "maxCompletions": 40,
+                    "formattingProvider": "ormolu",
+                    "plugin": {
+                        "stan": {
+                            "globalOn": true
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

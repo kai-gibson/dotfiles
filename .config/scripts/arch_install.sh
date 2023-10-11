@@ -196,7 +196,7 @@ arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
 # Home setup for user
 
 # Set up bootloader
-"loglevel=3 quiet splash rd.udev.log_priority=3 vt.global_cursor_default=0 cryptdevice=UUID=e5b0f14d-65d5-41c5-847b-5ed949f88c29:cryptroot root=/dev/mapper/cryptroot"
+#"loglevel=3 quiet splash rd.udev.log_priority=3 vt.global_cursor_default=0 cryptdevice=UUID=e5b0f14d-65d5-41c5-847b-5ed949f88c29:cryptroot root=/dev/mapper/cryptroot"
 # Add kernel modules
 
 ## Finally, enter into install and setup doftiles and password for user kai

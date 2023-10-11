@@ -37,8 +37,10 @@ bindkey -e
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
 source /home/kai/.config/scripts/lfcd.sh
+[ -f "/home/kai/.ghcup/env" ] && source "/home/kai/.ghcup/env" # ghcup-env
 #source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 #source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh 2>/dev/null
+#source ~/emsdk/emsdk_env.sh --build=Release
 
 # Custom functions
 # lfcd () {
@@ -60,7 +62,7 @@ source /home/kai/.config/scripts/lfcd.sh
 alias ls="ls -hN --color=auto --group-directories-first"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
-alias vim="nvim"
+#alias vim="nvim"
 alias rmm="/usr/bin/env rm"
 alias rm="trash"
 alias cp="cp"
@@ -79,10 +81,14 @@ alias config='/usr/bin/env git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias lazyconfig="lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias calc="noglob calc"
 # This could be optimised, might replace cbatticon with it
-alias batt="upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | grep -o -E '[^ ]*%'"
+alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -oP "percentage: +\K.*"'
+alias batt_more='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
+alias cpp='cd ~/Documents/cpp/small_projects/'
 
 # Path
 export PATH=$PATH:~/.local/bin
+#export PATH=$PATH:~/.local/share
+export PATH=$PATH:~/.cargo/bin
 
 # Autostart custom tmux session on launch
 sh /home/kai/.config/scripts/tmuxStart.sh
@@ -171,4 +177,16 @@ zstyle :compinstall filename '/home/kai/.zshrc'
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
+
+QT_QPA_PLATFORMTHEME=qt6ct
+## End of lines added by compinstall
+#
+#
+#
+#
+#
+#
+#
+#
+#
+

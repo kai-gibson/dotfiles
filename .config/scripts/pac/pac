@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+PACKAGES=$HOME/.local/share/pac/pkgList
+
+install() {
+    TOINSTALL="$(paru -Qi $(sort -u $PACKAGES | sed -e 's/#.*//g' -e '/^$/d') 2>&1 >/dev/null | awk '/^error/ { print $3 }' | sed -e "s/^.//" -e "s/.$//" | tr "\n" " ")"
+    if [[ -n "$TOINSTALL" ]]; then
+        paru -S $TOINSTALL
+    else
+        echo "Nothing to install"
+    fi
+}
+
+remove() {
+    TOREMOVE="$(diff --new-line-format="" --unchanged-line-format="" <(paru -Qqett | sort -u) <(sort -u "$PACKAGES" | sed -e 's/#.*//g' -e '/^$/d') | tr "\n" " ")"
+    if [[ -n "$TOREMOVE" ]]; then
+        paru -R $TOREMOVE
+    else
+        echo "Nothing to remove"
+    fi
+}
+
+add_to_list() {
+    for pkg in $ARGS
+    do
+        echo $pkg >> $PACKAGES
+    done
+}
+
+case "$1" in
+    -X)
+        install
+        remove
+        exit 0
+        ;;
+    -S)
+        shift
+        ARGS=$@
+        paru -S $ARGS && add_to_list
+        ;;
+    *)
+        paru $@
+        ;;
+esac

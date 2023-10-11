@@ -7,8 +7,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-treesitter/playground'
    
     " Visual
-    "Plug 'vim-airline/vim-airline'          " Status Bar
-    "Plug 'vim-airline/vim-airline-themes'   " Status Bar Themes
+    " Plug 'vim-airline/vim-airline'          " Status Bar
+    " Plug 'vim-airline/vim-airline-themes'   " Status Bar Themes
     "Plug 'ryanoasis/vim-devicons'           " Icons for various plugins
     "Plug 'dstein64/vim-startuptime'
     "Plug 'bling/vim-bufferline'
@@ -27,10 +27,7 @@ call plug#begin('~/.vim/plugged')
 " Initialize plugin system
 call plug#end()
 
-
 " === Remaps === "
-
-
 
 let mapleader = " "
 
@@ -90,6 +87,9 @@ nmap <leader>t :cd %:p:h <BAR> FloatermNew --opener=edit<CR>
 " Open file in split
 map gs :above wincmd f<cr>
 map gv :vertical wincmd f<cr>
+
+" View assembly of current c/c++ file
+nmap <leader>as :vnew %:r.asm <BAR> r!g++ -fno-asynchronous-unwind-tables -fverbose-asm -Wall -Wextra % -S -o -<CR>
 
 " Note:
 "    "S(" to surround block with brackets
@@ -181,12 +181,16 @@ set ttyfast                 " Speed up scrolling in Vim
 set conceallevel=2          " Hide symbols for bold/italics when writing in markdown
 set textwidth=72
 set colorcolumn=73
+set splitright
+
 highlight ColorColumn ctermbg=blue
 hi Floaterm guibg=black
 " test
 
 
 autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
+autocmd BufEnter *.slint :setlocal filetype=slint
+
 " Use hybrid line numbers in normal mode, and absolute in insert mode
 augroup numbertoggle
   autocmd!
