@@ -185,14 +185,15 @@ done
 
 CHROOT_CMD="useradd -m kai
             echo $USER_PASS | passwd kai
-            sed '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /etc/sudoers
+            sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /etc/sudoers
             echo $USER_PASS | passwd
             "
 
-arch-chroot /mnt /bin/bash -c "useradd -m kai"
-arch-chroot /mnt /bin/bash -c "echo $USER_PASS | passwd kai"
-arch-chroot /mnt /bin/bash -c "sed '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /etc/sudoers"
-arch-chroot /mnt /bin/bash -c "echo $USER_PASS | passwd"
+arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
+#arch-chroot /mnt /bin/bash -c "useradd -m kai"
+#arch-chroot /mnt /bin/bash -c "echo $USER_PASS | passwd kai"
+#arch-chroot /mnt /bin/bash -c "sed '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /etc/sudoers"
+#arch-chroot /mnt /bin/bash -c "echo $USER_PASS | passwd"
 
 
 # Home setup for user
