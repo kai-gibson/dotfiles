@@ -162,7 +162,7 @@ CHROOT_CMD="ln -sf /usr/share/zoneinfo/Australia/Melbourne /etc/localtime
             locale-gen
             echo 'arch' > /etc/hostname
             "
-arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
+arch-chroot /mnt /bin/bash -c "$CHROOT_CMD"
 
 # Chroot create user kai, do some setup
 
@@ -190,12 +190,24 @@ CHROOT_CMD="useradd -m kai
 sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /mnt/etc/sudoers
 
 arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
-#arch-chroot /mnt /bin/bash -c "useradd -m kai"
-#arch-chroot /mnt /bin/bash -c "echo $USER_PASS | passwd kai"
-#arch-chroot /mnt /bin/bash -c "sed '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /etc/sudoers"
-#arch-chroot /mnt /bin/bash -c "echo $USER_PASS | passwd"
+
+arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB"
+
+DISK="$DISK"2
+UUID=$(ls -l /dev/disk/by-uuid | grep $DISK | perl -ne '/\S+-\S+-\S+-\S+-\S+/ && print "$&\n"')
+
+export GRUB_ARGS='"loglevel=3 quiet splash rd.udev.log_priority=3 vt.global_cursor_default=0 cryptdevice=UUID=${UUID}:cryptroot root=/dev/mapper/cryptroot"'
+perl -pi.bak -e 's/(GRUB_CMDLINE_LINUX_DEFAULT=).*/$1$ENV{GRUB_ARGS}/' /mnt/etc/default/grub
 
 
+perl -pi.bak -e 's/(MODULES=).*/$1(i915 btrfs)' /mnt/etc/mkinitcpio.conf
+perl -pi.bak -e 's/(HOOKS=).*/$1(base udev plymouth autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)' /mnt/etc/mkinitcpio.conf
+
+arch-chroot /mnt /bin/bash -c "mkinitcpio -p linux"
+
+arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
+
+#"loglevel=3 quiet splash rd.udev.log_priority=3 vt.global_cursor_default=0 cryptdevice=UUID=e5b0f14d-65d5-41c5-847b-5ed949f88c29:cryptroot root=/dev/mapper/cryptroot"
 # Home setup for user
 
 # Set up bootloader
