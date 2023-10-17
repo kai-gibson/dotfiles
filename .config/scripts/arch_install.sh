@@ -189,7 +189,7 @@ CHROOT_CMD="useradd -m kai
             "
 sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /mnt/etc/sudoers
 
-arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
+arch-chroot /mnt /bin/bash -c "$CHROOT_CMD"
 
 arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB"
 
