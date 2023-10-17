@@ -199,9 +199,8 @@ UUID=$(ls -l /dev/disk/by-uuid | grep $DISK | perl -ne '/\S+-\S+-\S+-\S+-\S+/ &&
 export GRUB_ARGS='"loglevel=3 quiet splash rd.udev.log_priority=3 vt.global_cursor_default=0 cryptdevice=UUID=${UUID}:cryptroot root=/dev/mapper/cryptroot"'
 perl -pi.bak -e 's/(GRUB_CMDLINE_LINUX_DEFAULT=).*/$1$ENV{GRUB_ARGS}/' /mnt/etc/default/grub
 
-
-perl -pi.bak -e 's/(MODULES=).*/$1(i915 btrfs)' /mnt/etc/mkinitcpio.conf
-perl -pi.bak -e 's/(HOOKS=).*/$1(base udev plymouth autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)' /mnt/etc/mkinitcpio.conf
+perl -pi.bak -e 's/(MODULES=).*/$1(i915 btrfs)/' /mnt/etc/mkinitcpio.conf
+perl -pi.bak -e 's/(HOOKS=).*/$1(base udev plymouth autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)/' /mnt/etc/mkinitcpio.conf
 
 arch-chroot /mnt /bin/bash -c "mkinitcpio -p linux"
 
