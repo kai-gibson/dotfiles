@@ -185,9 +185,9 @@ done
 
 CHROOT_CMD="useradd -m kai
             echo $USER_PASS | passwd kai
-            sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /etc/sudoers
             echo $USER_PASS | passwd
             "
+sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /mnt/etc/sudoers
 
 arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
 #arch-chroot /mnt /bin/bash -c "useradd -m kai"
