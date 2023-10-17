@@ -184,8 +184,8 @@ do
 done 
 
 CHROOT_CMD="useradd -m kai
-            echo $USER_PASS | passwd kai
-            echo $USER_PASS | passwd
+            echo kai:$USER_PASS | chpasswd -c DES
+            echo root:$USER_PASS | chpasswd -c DES
             "
 sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /mnt/etc/sudoers
 
