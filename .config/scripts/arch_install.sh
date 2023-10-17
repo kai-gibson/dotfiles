@@ -191,7 +191,7 @@ sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /mnt/etc/sudoers
 
 arch-chroot /mnt /bin/bash -c "su - -c $CHROOT_CMD"
 
-arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=esp --bootloader-id=GRUB"
+arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB"
 
 DISK="$DISK"2
 UUID=$(ls -l /dev/disk/by-uuid | grep $DISK | perl -ne '/\S+-\S+-\S+-\S+-\S+/ && print "$&\n"')
