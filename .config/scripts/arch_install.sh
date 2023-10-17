@@ -183,8 +183,7 @@ do
      fi
 done 
 
-CHROOT_CMD="useradd -m kai
-            echo $USER_PASS | passwd kai
+CHROOT_CMD="useradd -m kai -p $USER_PASS
             echo $USER_PASS | passwd
             "
 sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /mnt/etc/sudoers
