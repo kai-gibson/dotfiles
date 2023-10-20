@@ -12,7 +12,6 @@ fi
 if nc -zw1 google.com 443; then
     # If yes, start install
     echo "Internet connected! Starting Install"
-if nc -zw1 google.com 443; then # If yes, start install echo "Internet connected! Starting Install"
 else
     echo "No internet detected, please connect before running this script"
     exit 0
