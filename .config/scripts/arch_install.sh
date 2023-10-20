@@ -9,6 +9,9 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Check if internet is connected
+if nc -zw1 google.com 443; then
+    # If yes, start install
+    echo "Internet connected! Starting Install"
 if nc -zw1 google.com 443; then # If yes, start install echo "Internet connected! Starting Install"
 else
     echo "No internet detected, please connect before running this script"
