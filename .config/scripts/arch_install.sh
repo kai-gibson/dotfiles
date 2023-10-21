@@ -279,8 +279,15 @@ arch-chroot /mnt /bin/bash -c "su kai --command='git clone https://github.com/ka
 # build suckless suite
 SUCKLESS_MAKE='cd /home/kai/.config/kwm
     make clean install
+
     cd ../dmenu-kai
-    make install
+    make clean install
+
+    cd ../dwmblocks-kai
+    make clean install
+
+    cd ../st-kai
+    make clean install
     '
 
 arch-chroot /mnt /bin/bash -c "$SUCKLESS_MAKE"
