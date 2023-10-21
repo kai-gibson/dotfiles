@@ -239,12 +239,12 @@
 # Install paru
 PARU_CMD="git clone https://aur.archlinux.org/paru.git
           cd paru
-          su kai --command='echo $USER_PASS | sudo -S makepkg -si'
+          makepkg -si
           cd ..
-          rm -rf paru
+          echo $USER_PASS | sudo -S rm -rf paru
          "
 
-arch-chroot /mnt /bin/bash -c "$PARU_CMD"
+arch-chroot /mnt /bin/bash -c "su kai --command='$PARU_CMD'"
 
 # Install AUR packages -- will this prompt me?
 AUR_PKGS="brave-bin
