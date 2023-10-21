@@ -239,7 +239,7 @@ echo -e "[Daemon]\nTheme=bgrt" > /mnt/etc/plymouthd.conf
 # Install paru
 PARU_CMD="git clone https://aur.archlinux.org/paru.git
           cd paru
-          su kai --command='makepkg -si'
+          su kai --command='echo $USER_PASS | sudo -S makepkg -si'
           cd ..
           rm -rf paru
          "
@@ -282,9 +282,9 @@ SUCKLESS_MAKE='su kai --command sh
     cd ~/.config
     https://github.com/kai-gibson/kwm.git
     cd kwm
-    sudo make clean install
+    echo $USER_PASS | sudo -S make clean install
     cd ../dmenu-kai
-    sudo make clean install'
+    echo $USER_PASS | sudo -S make clean install'
 
 arch-chroot /mnt /bin/bash -c "$SUCKLESS_MAKE"
 
