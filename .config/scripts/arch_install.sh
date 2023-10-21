@@ -236,23 +236,25 @@
 ## Plymouth setup
 #echo -e "[Daemon]\nTheme=bgrt" > /mnt/etc/plymouthd.conf
 
-# Install paru
-PARU_CMD="git clone https://aur.archlinux.org/paru.git
-          cd paru
-          makepkg -si
-          cd ..
-          echo $USER_PASS | sudo -S rm -rf paru
-         "
-
-arch-chroot /mnt /bin/bash -c "su kai --command='$PARU_CMD'"
+# Install paru -- this seems too hard lol
+#PARU_CMD="cd ~ 
+#          git clone https://aur.archlinux.org/paru.git
+#          cd paru
+#          makepkg -si
+#          cd ..
+#          echo $USER_PASS | sudo -S rm -rf paru
+#         "
+#
+#arch-chroot /mnt /bin/bash -c "su kai --command='$PARU_CMD'"
 
 # Install AUR packages -- will this prompt me?
-AUR_PKGS="brave-bin
-nordic-darker-theme
-qt5-styleplugins
-tela-icon-theme
-"
-arch-chroot /mnt /bin/bash -c "su kai --command='echo $AUR_PKGS | paru -S -'"
+#AUR_PKGS="brave-bin
+#nordic-darker-theme
+#qt5-styleplugins
+#tela-icon-theme
+#"
+
+#arch-chroot /mnt /bin/bash -c "su kai --command='echo $AUR_PKGS | paru -S -'"
 
 # Audio setup
 arch-chroot /mnt /bin/bash -c "su kai --command='systemctl --user enable pipewire-pulse'"
@@ -269,9 +271,8 @@ GITCMD='
 arch-chroot /mnt /bin/bash -c "$GITCMD"
 
 # Setup vim-plug
-VIMCMD='curl -fLo "${/home/kai/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+VIMCMD='curl -fLo /home/kai/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     '
-
 arch-chroot /mnt /bin/bash -c "$VIMCMD"
 
 # build suckless suite
