@@ -275,9 +275,10 @@ VIMCMD='curl -fLo /home/kai/.local/share/nvim/site/autoload/plug.vim --create-di
     '
 arch-chroot /mnt /bin/bash -c "$VIMCMD"
 
+arch-chroot /mnt /bin/bash -c "git clone https://github.com/kai-gibson/kwm.git"
+
 # build suckless suite
 SUCKLESS_MAKE='cd /home/kai/.config
-    git clone https://github.com/kai-gibson/kwm.git
     cd kwm
     make clean install
     cd ../dmenu-kai
