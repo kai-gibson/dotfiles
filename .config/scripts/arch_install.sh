@@ -336,4 +336,7 @@ perl -pi.bak -e 's/(HOOKS=).*/$1(base plymouth udev autodetect modconf kms keybo
 arch-chroot /mnt /bin/bash -c "mkinitcpio -p linux"
 arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
 
+# Set default shell
+arch-chroot /mnt /bin/bash -c "chsh -s /bin/zsh kai"
+
 echo -e "\n\nDone! Reboot when ready"
