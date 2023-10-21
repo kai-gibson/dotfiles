@@ -246,6 +246,7 @@ echo -e "[Daemon]\nTheme=bgrt" > /mnt/etc/plymouthd.conf
 #
 #arch-chroot /mnt /bin/bash -c "su kai --command='$PARU_CMD'"
 #
+
 # Install AUR packages -- will this prompt me?
 #AUR_PKGS="brave-bin
 #nordic-darker-theme
@@ -276,11 +277,11 @@ arch-chroot /mnt /bin/bash -c "su kai --command='$VIMCMD'"
 
 arch-chroot /mnt /bin/bash -c "su kai --command='git clone https://github.com/kai-gibson/kwm.git /home/kai/.config/kwm'"
 
-# build suckless suite
+echo -e "\n\nBuilding suckless suite\n"
 SUCKLESS_MAKE='cd /home/kai/.config/kwm
     make clean install
 
-    cd ../dmenu-kai
+    cd ../dmenu
     make clean install
 
     cd ../dwmblocks-kai
@@ -292,7 +293,35 @@ SUCKLESS_MAKE='cd /home/kai/.config/kwm
 
 arch-chroot /mnt /bin/bash -c "$SUCKLESS_MAKE"
 
-# Install bootloader
+echo -e "\n\nInstalling aur packages\n"
+
+AUR_PKGS="git clone https://aur.archlinux.org/brave-bin.git
+          cd brave-bin
+          makepkg -si
+          cd ..
+          rm -rf brave-bin
+
+          git clone https://aur.archlinux.org/nordic-theme.git
+          cd nordic-theme
+          makepkg -si
+          cd .. 
+          rm -rf nordic-theme
+
+          git clone https://aur.archlinux.org/qt5-styleplugins.git
+          cd qt5-styleplugins
+          makepkg -si
+          cd ..
+          rm -rf qt5-styleplugins
+
+          git clone https://aur.archlinux.org/tela-icon-theme.git
+          cd tela-icon-theme
+          makepkg -si
+          cd ..
+          rm -rf tela-icon-theme
+"
+arch-chroot /mnt /bin/bash -c "su kai --command='$AUR_PKGS'"
+
+echo -e "\nInstall bootloader\n\n"
 arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB"
 
 UUID=$(ls -l /dev/disk/by-uuid | grep $DISK | perl -ne '/.*\d+:\d+\s+(\S*)\s+.*2$/ && print "$1\n"')
@@ -308,6 +337,3 @@ arch-chroot /mnt /bin/bash -c "mkinitcpio -p linux"
 arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
 
 echo -e "\n\nDone! Reboot when ready"
-
-##TODO:
-# - install paru
