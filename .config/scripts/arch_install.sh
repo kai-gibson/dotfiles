@@ -166,7 +166,7 @@ PACSTRAP="linux
          fd
          trash-cli
          ueberzug
-         p7zipj
+         p7zip
          nodejs
          gdb
          xorg
