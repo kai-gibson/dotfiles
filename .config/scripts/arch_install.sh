@@ -150,8 +150,39 @@ PACSTRAP="linux
          grub-btrfs 
          efibootmgr
          intel-ucode
+         fzf
+         lf
+         lazygit
+         thunar
+         kitty
+         zsh
+         git
+         tmux
+         feh
+         picom
+         udiskie
+         bat
+         ripgrep
+         fd
+         trash-cli
+         ueberzug
+         p7zipj
+         nodejs
+         gdb
+         xorg
+         xorg-xinit
+         plymouth
+         pipewire
+         pipewire-pulse
+         wireplumber
+         qpwgraph
+         pipewire-audio
+         pipewire-jack
+         pipewire-alsa
+
          "
 
+#TODO Graphics drivers?
 pacstrap -K /mnt $PACSTRAP
 
 # Generate fstab
@@ -194,6 +225,68 @@ sed -i '/root ALL=(ALL:ALL) ALL/a\kai ALL=(ALL:ALL) ALL' /mnt/etc/sudoers
 
 arch-chroot /mnt /bin/bash -c "$CHROOT_CMD"
 
+# Setup tty autologin
+arch-chroot /mnt /bin/bash -c "mkdir -p /etc/systemd/system/getty@tty1.service.d/"
+arch-chroot /mnt /bin/bash -c "echo -e '[Service]\nExecStart=\nExecStart=/sbin/agetty --skip-login --autologin kai --noclear %I 38400 linux' > /etc/systemd/system/getty@tty1.service.d/override.conf"
+arch-chroot /mnt /bin/bash -c "systemctl enable getty@tty1"
+
+# Link nvim to vim
+arch-chroot /mnt /bin/bash -c "ln -sf /bin/nvim /bin/vim"
+
+# Plymouth setup
+echo -e "[Daemon]\nTheme=bgrt" > /mnt/etc/plymouthd.conf
+
+# Install paru
+PARU_CMD="git clone https://aur.archlinux.org/paru.git
+          cd paru
+          makepkg -si
+          cd ..
+          rm -rf paru
+         "
+
+arch-chroot /mnt /bin/bash -c "$PARU_CMD"
+
+# Install AUR packages -- will this prompt me?
+AUR_PKGS="brave-bin
+nordic-darker-theme
+qt5-styleplugins
+tela-icon-theme
+"
+arch-chroot /mnt /bin/bash -c "echo $AUR_PKGS | paru -S -"
+
+# Audio setup
+arch-chroot /mnt /bin/bash -c "su kai --command systemctl --user enable pipewire-pulse"
+
+# Setup dotfiles
+GITCMD='su kai --command sh
+    rm -rf ~/.*
+    rm -rf ~/*
+    echo ".dotfiles" >> ~/.gitignore 
+    git clone --bare -b nix 
+    https://github.com/kai-gibson/dotfiles.git $HOME/.dotfiles 
+    git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
+    exitexit'
+
+arch-chroot /mnt /bin/bash -c "$GITCMD"
+
+# Setup vim-plug
+VIMCMD='su kai --command sh
+    curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs 
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    exitexit'
+
+arch-chroot /mnt /bin/bash -c "$VIMCMD"
+
+# build suckless suite
+SUCKLESS_MAKE='su kai --command sh
+    cd ~/.config
+    https://github.com/kai-gibson/kwm.git
+    cd kwm
+    sudo make clean install
+    cd ../dmenu-kai
+    sudo make clean install'
+
+arch-chroot /mnt /bin/bash -c "$SUCKLESS_MAKE"
 
 # Install bootloader
 arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB"
@@ -205,20 +298,21 @@ export GRUB_ARGS="loglevel=3 quiet splash rd.udev.log_priority=3 vt.global_curso
 perl -pi.bak -e 's/(GRUB_CMDLINE_LINUX_DEFAULT=).*/$1\"$ENV{GRUB_ARGS}\"/' /mnt/etc/default/grub
 
 perl -pi.bak -e 's/(MODULES=).*/$1(i915 btrfs)/' /mnt/etc/mkinitcpio.conf
-perl -pi.bak -e 's/(HOOKS=).*/$1(base udev autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)/' /mnt/etc/mkinitcpio.conf # TODO add plymouth?
+perl -pi.bak -e 's/(HOOKS=).*/$1(base plymouth udev autodetect modconf kms keyboard keymap consolefont block encrypt filesystems fsck)/' /mnt/etc/mkinitcpio.conf # TODO add plymouth?
 
 arch-chroot /mnt /bin/bash -c "mkinitcpio -p linux"
 arch-chroot /mnt /bin/bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
 
-# Home setup for user
+echo -e "\n\nDone! Reboot when ready"
 
-## Finally, enter into install and setup doftiles and password for user kai
-#
-#
-#echo "kai:$USER_PASS" | nixos-enter --root '/mnt' --command 'chpasswd'
-#
+##TODO:
+# - install paru
+# - install plymouth
+# - install vim-plug
+# - setup dotfiles
+
+
 ## Setup dotfiles
-#
 #GITCMD='su kai --command sh\n
 #    rm -rf ~/.*\n
 #    rm -rf ~/*\n
