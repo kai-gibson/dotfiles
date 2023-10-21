@@ -276,15 +276,15 @@ VIMCMD='curl -fLo /home/kai/.local/share/nvim/site/autoload/plug.vim --create-di
 arch-chroot /mnt /bin/bash -c "$VIMCMD"
 
 # build suckless suite
-SUCKLESS_MAKE='cd ~/.config
+SUCKLESS_MAKE='cd /home/kai/.config
     git clone https://github.com/kai-gibson/kwm.git
     cd kwm
-    echo $USER_PASS | sudo -S make clean install
+    make clean install
     cd ../dmenu-kai
-    echo $USER_PASS | sudo -S make clean install
+    make clean install
     '
 
-arch-chroot /mnt /bin/bash -c "su kai --command='$SUCKLESS_MAKE'"
+arch-chroot /mnt /bin/bash -c "$SUCKLESS_MAKE"
 
 ## Install bootloader
 #arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB"
