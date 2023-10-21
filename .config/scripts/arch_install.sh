@@ -239,7 +239,7 @@ echo -e "[Daemon]\nTheme=bgrt" > /mnt/etc/plymouthd.conf
 # Install paru
 PARU_CMD="git clone https://aur.archlinux.org/paru.git
           cd paru
-          makepkg -si
+          su kai --command='makepkg -si'
           cd ..
           rm -rf paru
          "
@@ -252,10 +252,10 @@ nordic-darker-theme
 qt5-styleplugins
 tela-icon-theme
 "
-arch-chroot /mnt /bin/bash -c "echo $AUR_PKGS | paru -S -"
+arch-chroot /mnt /bin/bash -c "su kai --command='echo $AUR_PKGS | paru -S -'"
 
 # Audio setup
-arch-chroot /mnt /bin/bash -c "su kai --command systemctl --user enable pipewire-pulse"
+arch-chroot /mnt /bin/bash -c "su kai --command='systemctl --user enable pipewire-pulse'"
 
 # Setup dotfiles
 GITCMD='su kai --command sh
