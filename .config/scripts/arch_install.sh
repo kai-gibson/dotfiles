@@ -267,21 +267,20 @@ GITCMD='
     git --git-dir=/home/kai/.dotfiles --work-tree=/home/kai checkout
     '
 
-arch-chroot /mnt /bin/bash -c "$GITCMD"
+arch-chroot /mnt /bin/bash -c "su kai --command='$GITCMD'"
 
 # Setup vim-plug
 VIMCMD='curl -fLo /home/kai/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     '
-arch-chroot /mnt /bin/bash -c "$VIMCMD"
+arch-chroot /mnt /bin/bash -c "su kai --command='$VIMCMD'"
 
-arch-chroot /mnt /bin/bash -c "git clone https://github.com/kai-gibson/kwm.git"
+arch-chroot /mnt /bin/bash -c "su kai --command='git clone https://github.com/kai-gibson/kwm.git /home/kai/.config/kwm'"
 
 # build suckless suite
-SUCKLESS_MAKE='cd /home/kai/.config
-    cd kwm
+SUCKLESS_MAKE='cd /home/kai/.config/kwm
     make clean install
     cd ../dmenu-kai
-    make clean install
+    make install
     '
 
 arch-chroot /mnt /bin/bash -c "$SUCKLESS_MAKE"
