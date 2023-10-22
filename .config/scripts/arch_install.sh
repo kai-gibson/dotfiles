@@ -293,33 +293,33 @@ SUCKLESS_MAKE='cd /home/kai/.config/kwm
 
 arch-chroot /mnt /bin/bash -c "$SUCKLESS_MAKE"
 
-echo -e "\n\nInstalling aur packages\n"
-
-AUR_PKGS="git clone https://aur.archlinux.org/brave-bin.git
-          cd brave-bin
-          makepkg -si
-          cd ..
-          rm -rf brave-bin
-
-          git clone https://aur.archlinux.org/nordic-theme.git
-          cd nordic-theme
-          makepkg -si
-          cd .. 
-          rm -rf nordic-theme
-
-          git clone https://aur.archlinux.org/qt5-styleplugins.git
-          cd qt5-styleplugins
-          makepkg -si
-          cd ..
-          rm -rf qt5-styleplugins
-
-          git clone https://aur.archlinux.org/tela-icon-theme.git
-          cd tela-icon-theme
-          makepkg -si
-          cd ..
-          rm -rf tela-icon-theme
-"
-arch-chroot /mnt /bin/bash -c "su kai --command='$AUR_PKGS'"
+#echo -e "\n\nInstalling aur packages\n"
+#
+#AUR_PKGS="git clone https://aur.archlinux.org/brave-bin.git
+#          cd brave-bin
+#          makepkg -si
+#          cd ..
+#          rm -rf brave-bin
+#
+#          git clone https://aur.archlinux.org/nordic-theme.git
+#          cd nordic-theme
+#          makepkg -si
+#          cd .. 
+#          rm -rf nordic-theme
+#
+#          git clone https://aur.archlinux.org/qt5-styleplugins.git
+#          cd qt5-styleplugins
+#          makepkg -si
+#          cd ..
+#          rm -rf qt5-styleplugins
+#
+#          git clone https://aur.archlinux.org/tela-icon-theme.git
+#          cd tela-icon-theme
+#          makepkg -si
+#          cd ..
+#          rm -rf tela-icon-theme
+#"
+#arch-chroot /mnt /bin/bash -c "su kai --command='$AUR_PKGS'"
 
 echo -e "\nInstall bootloader\n\n"
 arch-chroot /mnt /bin/bash -c "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB"
