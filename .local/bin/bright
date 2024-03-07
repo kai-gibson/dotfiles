@@ -1,0 +1,14 @@
+#!/bin/sh
+
+BRIGHT=$(cat /sys/class/backlight/acpi_video0/brightness)
+
+if [ $1 == "+" ]; 
+then
+    VAR=$(echo "$BRIGHT + 10" | bc)
+else 
+    VAR=$(echo "$BRIGHT - 10" | bc)
+    echo "down"
+fi
+
+echo "$VAR" > /sys/class/backlight/acpi_video0/brightness
+
