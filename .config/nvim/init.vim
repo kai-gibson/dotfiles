@@ -5,6 +5,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Code Completions
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/playground'
+    Plug 'rebelot/kanagawa.nvim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+    Plug 'stevearc/oil.nvim'
    
     " Visual
     " Plug 'vim-airline/vim-airline'          " Status Bar
@@ -17,8 +21,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'voldikss/vim-floaterm'
     " Plug 'tpope/vim-surround'
     " Plug 'tpope/vim-commentary'
-    Plug 'dhruvasagar/vim-table-mode'   
-    Plug 'donRaphaco/neotex', { 'for': 'tex' }
 
     " Debugging
     Plug 'mfussenegger/nvim-dap'
@@ -69,13 +71,17 @@ nmap <leader>bD :bd!<CR>
 nmap <leader>f :FloatermNew --opener=edit lf<CR>
 
 " Fuzzy find current buffer's DIR
-nmap <leader>p :cd %:p:h <BAR> FloatermNew --opener=edit fzf<CR>
+"nmap <leader>p :cd %:p:h <BAR> FloatermNew --opener=edit fzf<CR>
+nnoremap <leader>p <cmd>Telescope find_files<CR>
+nnoremap <leader>g <cmd>Telescope live_grep<CR>
+nnoremap <leader>b <cmd>Telescope buffers<CR>
+
 
 " Lazygit in buffer DIR 
 nmap <leader>v :cd %:p:h <BAR> FloatermNew --opener=edit lazygit<CR>
 
 " Live grep all files in directory
-nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit ~/.config/scripts/floaterm_scripts/live_grep.sh<CR>
+"nmap <leader>g :cd %:p:h <BAR> FloatermNew --opener=edit ~/.config/scripts/floaterm_scripts/live_grep.sh<CR>
 
 " Fuzzy find any file in /home or /media
 nmap <leader>l :FloatermNew --opener=edit floaterm_wrapper $(fd -H . /home /run/media \| fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')<CR>
@@ -149,6 +155,7 @@ endfunction
 
 packadd termdebug
 
+colorscheme kanagawa
 let g:termdebug_wide=1
 set updatetime=300          " Don't give ins-completion-menu messages.
 set shortmess+=c            " Always show signcolumns
@@ -164,10 +171,10 @@ set ignorecase              " Case insensitive
 set smartcase
 set nohlsearch              " Don't highlight search 
 set incsearch               " Incremental search
-set tabstop=4               " Number of columns occupied by a tab 
-set softtabstop=4           " See multiple spaces as tabstops so <BS> does the right 
+set tabstop=2               " Number of columns occupied by a tab 
+set softtabstop=2           " See multiple spaces as tabstops so <BS> does the right 
 set expandtab               " Converts tabs to white space
-set shiftwidth=4            " Width for autoindents
+set shiftwidth=2            " Width for autoindents
 set autoindent              " Indent a new line the same amount as the line just typed
 set smartindent
 set number                  " Add line numbers
@@ -179,8 +186,8 @@ filetype plugin on
 set cursorline              " Highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
 set conceallevel=2          " Hide symbols for bold/italics when writing in markdown
-set textwidth=72
-set colorcolumn=73
+set textwidth=80
+set colorcolumn=81
 set splitright
 
 highlight ColorColumn ctermbg=blue
@@ -403,5 +410,24 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+vim.filetype.add({
+  extension = {
+    c3 = "c3",
+    c3i = "c3",
+    c3t = "c3",
+  },
+})
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.c3 = {
+  install_info = {
+    url = "https://github.com/c3lang/tree-sitter-c3",
+    files = {"src/parser.c", "src/scanner.c"},
+    branch = "main",
+  },
+}
+require("oil").setup()
+
 EOF
 
