@@ -34,7 +34,16 @@ case "$ext" in
 	# Try to keep these cases in alphabetical order.
 	[0-9]) preconv "$file" | refer -PS -e | groff -mandoc -T pdf > "$base".pdf ;;
 	c) cc "$file" -o "$base" && "$base" ;;
-	cpp|cxx) g++ "$@" $cxx_args "$file" -o "$base" && "$base" ;;
+	cpp|cxx) 
+    if [ -e "CMakeLists.txt" ]; then
+      dirname=$(basename $(dirname "$file"))
+
+      cmake --build build && ./build/"$dirname"
+    else
+        g++ "$@" $cxx_args "$file" -o "$base" && "$base"
+    fi
+    #g++ "$@" $cxx_args "$file" -o "$base" && "$base" 
+    ;;
 	#cpp|cxx) g++ "$@" "${cxx_args[@]}" "$file" -o "$base" && "$base" ;;
 	cs) mcs "$file" && mono "$base".exe ;;
 	go) go run "$file" ;;
@@ -53,11 +62,14 @@ case "$ext" in
 	org) emacs "$file" --batch -u "$USER" -f org-latex-export-to-pdf ;;
 	py) python "$file" ;;
 	[rR]md) Rscript -e "rmarkdown::render('$file', quiet=TRUE)" ;;
-	rs) cargo build ;;
+	rs) cargo run ;;
 	sass) sassc -a "$file" "$base".css ;;
 	scad) openscad -o "$base".stl "$file" ;;
 	sent) setsid -f sent "$file" 2>/dev/null ;;
+	c3) c3c run ;;
+	odin) odin run . -debug;;
 	tex) textype "$file" ;;
     lisp|cl|lsp) sbcl --script "$file";;
+  zig) zig build run;;
 	*) sed -n '/^#!/s/^#!//p; q' "$file" | xargs -r -I % "$file" ;;
 esac

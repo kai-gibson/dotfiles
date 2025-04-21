@@ -1,55 +1,78 @@
 {
-    "prettier.enable": true,
-    "suggest.enablePreselect": false,
-    "suggest.noselect": true,
-    "coc.preferences.formatOnSaveFiletypes": [
-        "javascript",
-        "typescript",
-        "python",
-        "typescriptreact",
-        "json",
-        "javascriptreact",
-        "typescript.tsx",
-        "graphql"
-    ],
-    "snippets.ultisnips.pythonPrompt": false,
-    "clangd.path": "/usr/bin/clangd",
-    "languageserver": {
-        "slint": {
-            "command": "slint-lsp",
-            "filetypes": [
-                "slint"
-            ]
-        },
+  "prettier.enable": true,
+  "suggest.enablePreselect": false,
+  "suggest.noselect": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "python",
+    "typescriptreact",
+    "json",
+    "javascriptreact",
+    "typescript.tsx",
+    "graphql"
+  ],
+  "clangd.arguments": [
+    "--clang-tidy",
+    "--inlay-hints=false",
+  ],
+  "zig.path": "/usr/bin/zls",
+  "inlayHint.enable": false,
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+  "rust-analyzer.inlayHints.bindingModeHints.enable": false,
+  "snippets.ultisnips.pythonPrompt": false,
+  "clangd.path": "/usr/bin/clangd",
+  "languageserver": {
+    "odin": {
+      "command": "ols",
+      "filetypes": [
+        "odin"
+      ],
+      "rootPatterns": [
+        "ols.json"
+      ]
+    },
+    "slint": {
+      "command": "slint-lsp",
+      "filetypes": [
+        "slint"
+      ]
+    },
+    "c3": {
+      "command": "~/.local/bin/c3-server/bin/release/c3lsp",
+      "filetypes": [
+        "c3"
+      ]
+    },
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": [
+        "--lsp"
+      ],
+      "rootPatterns": [
+        "*.cabal",
+        "stack.yaml",
+        "cabal.project",
+        "package.yaml",
+        "hie.yaml"
+      ],
+      "filetypes": [
+        "haskell",
+        "lhaskell"
+      ],
+      "settings": {
         "haskell": {
-            "command": "haskell-language-server-wrapper",
-            "args": [
-                "--lsp"
-            ],
-            "rootPatterns": [
-                "*.cabal",
-                "stack.yaml",
-                "cabal.project",
-                "package.yaml",
-                "hie.yaml"
-            ],
-            "filetypes": [
-                "haskell",
-                "lhaskell"
-            ],
-            "settings": {
-                "haskell": {
-                    "checkParents": "CheckOnSave",
-                    "checkProject": true,
-                    "maxCompletions": 40,
-                    "formattingProvider": "ormolu",
-                    "plugin": {
-                        "stan": {
-                            "globalOn": true
-                        }
-                    }
-                }
+          "checkParents": "CheckOnSave",
+          "checkProject": true,
+          "maxCompletions": 40,
+          "formattingProvider": "ormolu",
+          "plugin": {
+            "stan": {
+              "globalOn": true
             }
+          }
         }
+      }
     }
+  }
 }

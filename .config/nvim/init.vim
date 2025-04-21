@@ -9,6 +9,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
     Plug 'stevearc/oil.nvim'
+    Plug 'github/copilot.vim'
    
     " Visual
     " Plug 'vim-airline/vim-airline'          " Status Bar
@@ -225,7 +226,7 @@ let g:coc_global_extensions = [
   \ 'coc-cmake',
   \ 'coc-html',
   \ 'coc-pyright',
-  \ 'coc-rust-analyzer',
+  "\ 'coc-rust-analyzer',
   \ 'coc-tsserver',
   \ ]
 
